@@ -1,0 +1,47 @@
+<div class="login-container">
+    <!-- Panel Izquierdo -->
+    <div class="left-panel">
+      <h1>Welcome back</h1>
+      <p>
+        Lorem ipsum is placeholder text commonly used in the graphic, print, and
+        publishing industries for previewing layouts and visual mockups.
+      </p>
+    </div>
+  
+    <!-- Panel Derecho -->
+    <div class="right-panel">
+      <div class="login-card">
+        <h2>Sign In</h2>
+        <p>
+          Don't have an account?
+          <a href="#" class="sign-up-link">Sign Up</a>
+        </p>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <input
+              type="email"
+              placeholder="Email"
+              formControlName="email"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              placeholder="Password"
+              formControlName="password"
+              class="form-control"
+            />
+          </div>
+          <a href="#" class="forgot-password-link">Forgot your password?</a>
+          <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+        <div class="or-section">or</div>
+        <div class="social-login">
+          <button class="google-btn">Google</button>
+          <button class="facebook-btn">Facebook</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

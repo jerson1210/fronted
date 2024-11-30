@@ -1,0 +1,41 @@
+/* Estilo para el encabezado */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+  }
+  
+  .logo h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-info p {
+    margin-right: 10px;
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  /* Estilos para la tabla */
+  .p-datatable-striped .p-datatable-tbody > tr:nth-child(odd) {
+    background-color: #f4f4f4;
+  }
+  
+  /* Estilo para los botones de acción */
+  .p-button {
+    margin: 5px;
+  }
+  
+    
