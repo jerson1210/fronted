@@ -7,8 +7,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
-
 import { CardModule } from 'primeng/card';
+import { vehiculo } from '../models/vehiculo';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class VehiculosFormComponent {
   isSaveInProgress:boolean=false;
   edit:boolean=false;
 
-  constructor(private fb:FormBuilder,private vehiculoService:VehiculoService,private activatedRoute:ActivatedRoute,private messageService:MessageService,private navrouter:Router){
+  constructor(private fb:FormBuilder,private vehiculoService:VehiculoService,private router:Router,private activatedRoute:ActivatedRoute,private messageService:MessageService,private navrouter:Router){
     this.formVehiculo=this.fb.group({
       idVehiculo: [null],  // Asegúrate de que el id sea numérico
       tipoVehiculo: ['', Validators.required],  // Campo de texto con validación requerida
@@ -60,33 +60,37 @@ export class VehiculosFormComponent {
       this.messageService.add({ severity: "error", summary: "Error", detail: "Revise los campos" });
       return;
     }
-  
-    // Obtener el usuario desde localStorage y asegurarse de que no sea null
+
+    // Obtener el usuario desde localStorage
     const usuario = localStorage.getItem('usuario');
     if (!usuario) {
       this.messageService.add({ severity: "error", summary: "Error", detail: "No se encontró usuario en el localStorage" });
       return;
     }
-  
+
     const usuarioData = JSON.parse(usuario);  // Ahora 'usuario' es de tipo 'string', no 'null'
     const usuarioId = usuarioData ? usuarioData.idUsuario : null;
-  
+
     if (!usuarioId) {
       this.messageService.add({ severity: "error", summary: "Error", detail: "Usuario no encontrado" });
       return;
     }
-  
-    // Agregar el ID del usuario al cuerpo de la solicitud
-    const vehiculoData = { 
-      ...this.formVehiculo.value,
-      IdUsuario: usuarioId // Asegúrate de que el backend espera 'IdUsuario' en lugar de 'usuarioId'
+
+    // Preparar los datos del vehículo, agregando el usuario con el idUsuario
+    const vehiculoData: vehiculo = {
+      tipoVehiculo: this.formVehiculo.value.tipoVehiculo,
+      peso: this.formVehiculo.value.peso,
+      marca: this.formVehiculo.value.marca,
+      placa: this.formVehiculo.value.placa,
+      estado: this.formVehiculo.value.estado,
+      usuario: { idUsuario: usuarioId }  // Se incluye el idUsuario en el cuerpo
     };
-    console.log(vehiculoData)
-  
+
     // Llamar al servicio para crear el vehículo
     this.vehiculoService.createVehiculo(vehiculoData).subscribe({
       next: () => {
         this.messageService.add({ severity: "success", summary: "Guardado", detail: "Vehículo guardado" });
+        this.router.navigateByUrl("/vehiculos"); // Ajusta la ruta a donde necesites
       },
       error: (err) => {
         console.error('Error al guardar el vehículo', err);

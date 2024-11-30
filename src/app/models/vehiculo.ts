@@ -1,12 +1,15 @@
 import { usuario } from "./usuario";
 
-export interface vehiculo{
-    idVehiculo:number;
-    tipoVehiculo:String;
-    pesoVehiculo:number;
-    marca:String;
-    estado:boolean;
-    placa:String;
-    usuario?:usuario
-
-}    
+// vehiculo.model.ts
+export interface vehiculo {
+    
+    tipoVehiculo: string;
+    peso: number;
+    marca: string;
+    placa: string;
+    estado: boolean;
+    usuario: {
+      idUsuario: number; // Relación con el usuario, solo es necesario el ID
+    };
+  }
+  

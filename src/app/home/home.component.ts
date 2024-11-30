@@ -30,7 +30,5 @@ export class HomeComponent {
       this.vehiculo=data;
     })
   }
-    trackById(index: number, vehiculo: vehiculo): number {
-    return vehiculo.idVehiculo;  // Usamos el id como clave única para cada elemento
-  }
+
 }

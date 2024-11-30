@@ -21,8 +21,32 @@ export class VehiculoService {
   }
   
 
-  createVehiculo(vehiculo: vehiculo): Observable<vehiculo> {
-    return this.http.post<vehiculo>(`${this.apiUrl}/crear`, vehiculo);
+  createVehiculo(vehiculo: any): Observable<any> {
+    const usuarioString = localStorage.getItem('usuario');  // Obtener el usuario desde localStorage
+  
+    // Comprobar si 'usuario' es null o vacío
+    if (!usuarioString) {
+      throw new Error("No se encontró el usuario en el localStorage");
+    }
+  
+    // Si no es null, parsear el JSON
+    const usuario = JSON.parse(usuarioString);
+  
+    // Asegurarse de que usuario no sea null
+    if (!usuario || !usuario.idUsuario) {
+      throw new Error("El usuario no tiene un ID válido");
+    }
+  
+    const usuarioId = usuario.idUsuario;  // Obtener el ID del usuario
+  
+    // Asignar el ID del usuario al objeto vehiculo
+    const vehiculoConUsuario = { 
+      ...vehiculo,  // Copiar todas las propiedades del vehículo
+      IdUsuario: usuarioId  // Asignar el ID del usuario al vehículo
+    };
+  
+    // Enviar la solicitud POST con el objeto vehiculo que incluye el usuarioId
+    return this.http.post<any>(`${this.apiUrl}/crear`, vehiculoConUsuario);
   }
   
 
