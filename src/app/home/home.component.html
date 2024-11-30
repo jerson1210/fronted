@@ -1,71 +1,23 @@
-<!-- Sidebar -->
-<button pButton label="Abrir Menu" icon="pi pi-bars" (click)="sidebarVisible = true"></button>
-<div class="home-container">
-  <h1>Bienvenido a la página de inicio</h1>
+<div class="container">
+  <h2 class="title">Vehículos de {{ usuarioId }}</h2>
 
-  <!-- Verifica si el usuario está autenticado -->
-  <div *ngIf="usuario">
-    <p>¡Hola, {{ usuario.nombre }}!</p>
-    <p>Correo: {{ usuario.email }}</p>
-    <!-- Aquí puedes agregar más detalles del usuario si están disponibles -->
+  <div *ngIf="vehiculos.length === 0" class="no-vehiculos-message">
+    <p>No se encontraron vehículos registrados para este usuario.</p>
   </div>
 
-  <div *ngIf="!usuario">
-    <p>No estás autenticado. Por favor, inicia sesión.</p>
-  </div>
-</div>
-<p-sidebar [(visible)]="sidebarVisible" position="left" [modal]="true" [showCloseIcon]="true">
-    <h3>Panel de Navegación</h3>
-    <ul>
-      <li><a routerLink="">Vehículos</a></li>
-      <li><a routerLink="/paquete">Paquete</a></li>
-      <li><a routerLink="/ruta">Ruta</a></li>
-      <li><a routerLink="/conductor">Conductor</a></li>
-    </ul>
-  </p-sidebar>
-  
-  <!-- Header with application name and user profile -->
-  <div class="header">
-    <div class="logo">
-      <img src="assets/logo.png" alt="Logo" />
-      <h1>ROUTEFLEX</h1>
-    </div>
-    <div class="user-info">
-      <p>Elías Castillo</p>
-      <img src="assets/user-avatar.png" alt="User Avatar" class="user-avatar" />
-    </div>
-  </div>
-  
-  <!-- Table of vehicles -->
-  <p-table [value]="vehiculo" class="p-datatable-striped">
-    <ng-template pTemplate="header">
+  <table class="table">
+    <thead>
       <tr>
-        <th>Id</th>
-        <th>Marca</th>
+        <th>ID</th>
         <th>Tipo</th>
         <th>Peso</th>
+        <th>Marca</th>
+        <th>Placa</th>
         <th>Estado</th>
-        <th>Acciones</th>
       </tr>
-    </ng-template>
-  
-    <ng-template pTemplate="body" let-vehiculo>
-      <tr>
-        <td>{{ vehiculo.IdVehiculo }}</td>
-        <td>{{ vehiculo.Marca }}</td>
-        <td>{{ vehiculo.TipoVehiculo }}</td>
-        <td>{{ vehiculo.PesoVehiculo }}</td>
-        <td>{{ vehiculo.Estado }}</td>
-        <td>
-          <button pButton label="Actualizar" icon="pi pi-refresh" class="p-button-info"></button>
-          <button pButton label="Eliminar" icon="pi pi-trash" class="p-button-danger"></button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-  
-  <!-- Button to create a new vehicle -->
-  <div class="p-d-flex p-jc-between">
-    <button pButton label="Crear" icon="pi pi-plus" class="p-button-success" routerLink="/vehiculos-form/new"></button>
-  </div>
-  
+    </thead>
+    <tbody id="tabla-vehiculos">
+      <!-- Aquí se insertarán dinámicamente las filas -->
+    </tbody>
+  </table>
+</div>

@@ -1,41 +1,90 @@
-/* Estilo para el encabezado */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
+/* Estilo para el contenedor principal */
+.container {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #f3f3f3;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
 }
 
-.logo h1 {
-  margin: 0;
-  font-size: 24px;
+.container:hover {
+  transform: scale(1.02);
 }
 
-.user-info {
-  display: flex;
-  align-items: center;
+/* Estilo para el título */
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
 }
 
-.user-info p {
-  margin-right: 10px;
+/* Estilo para el mensaje cuando no hay vehículos */
+.no-vehiculos-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  font-size: 18px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
 }
 
-.user-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+.no-vehiculos-message:hover {
+  background-color: #f5c6cb;
 }
 
 /* Estilos para la tabla */
-.p-datatable-striped .p-datatable-tbody > tr:nth-child(odd) {
-  background-color: #f4f4f4;
+.table {
+  width: 100%;
+  border-radius: 10px;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
-/* Estilo para los botones de acción */
-.p-button {
-  margin: 5px;
+.table th, .table td {
+  padding: 18px;
+  text-align: left;
+  font-size: 16px;
+  border-bottom: 1px solid #e2e2e2;
 }
 
-  
+.table th {
+  background-color: #007bff;
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.table tbody tr:hover {
+  background-color: #f1f8ff;
+  transition: background-color 0.3s ease;
+}
+
+/* Estilos para las celdas de la tabla */
+.table td {
+  color: #555;
+}
+
+/* Efecto hover sobre las filas de la tabla */
+.table tr:hover td {
+  color: #007bff;
+}
+
+/* Estilo de la fila alternante */
+.table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}

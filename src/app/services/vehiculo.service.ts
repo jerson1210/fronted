@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { vehiculo} from '../models/vehiculo';
+import { vehiculoTotal } from '../models/vehiculoTotal';
 
 
 @Injectable({
@@ -57,6 +58,11 @@ export class VehiculoService {
 
   deleteVehiculo(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/eliminar/${id}`);
+  }
+
+
+  listarVehiculosPorUsuario(idUsuario: number): Observable<vehiculoTotal[]> {
+    return this.http.get<vehiculoTotal[]>(`${this.apiUrl}/listar/${idUsuario}`);
   }
   
 }
