@@ -32,7 +32,7 @@ export class ConductorComponent {
     })
   }
     trackById(index: number, conductor: conductor): number {
-    return conductor.IdConductor;  // Usamos el id como clave única para cada elemento
+    return conductor.idConductor  // Usamos el id como clave única para cada elemento
   }
 
 }

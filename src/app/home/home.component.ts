@@ -1,7 +1,7 @@
 
 import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { vehiculos } from '../models/vehiculo';
+import { vehiculo} from '../models/vehiculo';
 import { VehiculoService } from '../services/vehiculo.service';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
@@ -17,7 +17,7 @@ import { UsuarioService } from '../services/usuario.service';
 })
 export class HomeComponent {
   sidebarVisible: boolean = false;
-  vehiculos:vehiculos[]=[];
+  vehiculo:vehiculo[]=[];
   usuario:any;
 
   constructor(private vehiculoService:VehiculoService,private usuarioService:UsuarioService){}
@@ -27,10 +27,10 @@ export class HomeComponent {
   }
   getAllVehiculos(){
     this.vehiculoService.getVehiculo().subscribe((data)=>{
-      this.vehiculos=data;
+      this.vehiculo=data;
     })
   }
-    trackById(index: number, vehiculo: vehiculos): number {
-    return vehiculo.IdVehiculo;  // Usamos el id como clave única para cada elemento
+    trackById(index: number, vehiculo: vehiculo): number {
+    return vehiculo.idVehiculo;  // Usamos el id como clave única para cada elemento
   }
 }

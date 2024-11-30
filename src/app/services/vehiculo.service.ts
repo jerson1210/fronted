@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { vehiculos } from '../models/vehiculo';
+import { vehiculo} from '../models/vehiculo';
 
 
 @Injectable({
@@ -12,22 +12,22 @@ export class VehiculoService {
 
   constructor(private http:HttpClient) { }
 
-  getVehiculo():Observable<vehiculos[]>{
-    return this.http.get<vehiculos[]>(this.apiUrl)
+  getVehiculo():Observable<vehiculo[]>{
+    return this.http.get<vehiculo[]>(this.apiUrl)
   }
 
-  getVehiculoId(id: number): Observable<vehiculos> {
-    return this.http.get<vehiculos>(`${this.apiUrl}/listar/${id}`);
-  }
-  
-
-  createVehiculo(vehiculo: vehiculos): Observable<vehiculos> {
-    return this.http.post<vehiculos>(`${this.apiUrl}/crear`, vehiculo);
+  getVehiculoId(id: number): Observable<vehiculo> {
+    return this.http.get<vehiculo>(`${this.apiUrl}/listar/${id}`);
   }
   
 
-  actualizarVehiculo(vehiculo: vehiculos): Observable<vehiculos> {
-    return this.http.put<vehiculos>(`${this.apiUrl}/actualizar`, vehiculo);
+  createVehiculo(vehiculo: vehiculo): Observable<vehiculo> {
+    return this.http.post<vehiculo>(`${this.apiUrl}/crear`, vehiculo);
+  }
+  
+
+  actualizarVehiculo(vehiculo: vehiculo): Observable<vehiculo> {
+    return this.http.put<vehiculo>(`${this.apiUrl}/actualizar`, vehiculo);
   }
   
 
