@@ -1,9 +1,14 @@
+import { usuario } from './usuario';
+import { asignarRuta } from './asignarRuta';
+
 export interface conductor{
-    IdConductor:number;
-    Nombre:String;
-    Apellido:String;
-    Correo:String;
-    Telefono:number;
-    contrasena:String
+    idConductor: number; 
+    nombre: string;    
+    apellido: string;    
+    correo: string;    
+    telefono: string;    
+    contrasena?: string;
+    usuario?: usuario;   
+    asignarRuta?: asignarRuta;
 
 }    

@@ -1,8 +1,8 @@
-export interface vehiculos{
-    IdVehiculo:number;
-    TipoVehiculo:String;
-    PesoVehiculo:number;
-    Marca:String;
-    Estado:boolean
+export interface vehiculo{
+    idVehiculo:number;
+    tipoVehiculo:String;
+    pesoVehiculo:number;
+    marca:String;
+    estado:boolean
 
 }    
