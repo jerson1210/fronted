@@ -7,6 +7,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
+
 import { CardModule } from 'primeng/card';
 import { vehiculo } from '../models/vehiculo';
 
@@ -26,7 +27,7 @@ export class VehiculosFormComponent {
     this.formVehiculo=this.fb.group({
       idVehiculo: [null],  // Asegúrate de que el id sea numérico
       tipoVehiculo: ['', Validators.required],  // Campo de texto con validación requerida
-      pesoVehiculo: [null, [Validators.required, Validators.pattern('^[0-9]*$')]],  // Peso numérico
+      peso: [null, [Validators.required, Validators.pattern('^[0-9]*$')]],  // Peso numérico
       marca: ['', Validators.required],  // Campo de texto con validación requerida
       estado: [false, Validators.required] ,
       placa: ["", Validators.required]
@@ -36,24 +37,25 @@ export class VehiculosFormComponent {
   }
 
   ngOnInit():void{
-    let id=this.activatedRoute.snapshot.paramMap.get("IdVehiculo")
+    let id=this.activatedRoute.snapshot.paramMap.get("idVehiculo")
     if(id && id !== "new"){
       this.edit=true
       this.getVehiculoId(+id!)
     }
   }
-  getVehiculoId(id:number){
+  getVehiculoId(id: number): void {
     this.vehiculoService.getVehiculoId(id).subscribe({
-      next:foundVehiculo=>{
-        this.formVehiculo.patchValue(foundVehiculo);
+      next: (vehiculo) => {
+        // Rellenar el formulario con los datos del vehículo
+        this.formVehiculo.patchValue(vehiculo);
       },
-      error:()=>{
-        this.messageService.add({severity:"error",summary:"Error",detail:"No Encontro"});
-        //this.navrouter.navigateByUrl("/")
+      error: (err) => {
+        console.error('Error al cargar el vehículo', err);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo cargar el vehículo' });
       }
-
-    })
+    });
   }
+  
 
   createVehiculo() {
     if (this.formVehiculo.invalid) {
@@ -103,19 +105,33 @@ export class VehiculosFormComponent {
   
 
   updateVehiculo(){
-    if(this.formVehiculo.invalid){
-      this.messageService.add({severity:"error",summary:"Error",detail:"Revise los cambios"});
-        return
+    if (this.formVehiculo.invalid) {
+      this.messageService.add({ severity: "error", summary: "Error", detail: "Revise los cambios" });
+      return;
     }
-    this.vehiculoService.actualizarVehiculo(this.formVehiculo.value).subscribe({
-      next:()=>{
-        this.messageService.add({severity:"guardado",summary:"guardado",detail:"vehiculo actualizado"});
+  
+    // Obtenemos los datos del vehículo
+    const vehiculoData = this.formVehiculo.value;
+  
+    // Aseguramos que el idVehiculo esté presente en los datos del formulario
+    if (!vehiculoData.idVehiculo) {
+      this.messageService.add({ severity: "error", summary: "Error", detail: "ID de vehículo no encontrado" });
+      return;
+    }
+  
+    // Llamar al servicio para actualizar el vehículo
+    this.vehiculoService.actualizarVehiculo(vehiculoData).subscribe({
+      next: () => {
+        this.messageService.add({ severity: "success", summary: "Guardado", detail: "Vehículo actualizado" });
+        this.router.navigateByUrl("/vehiculos"); // Redirige a la lista de vehículos
       },
-      error:()=>{
-        this.messageService.add({severity:"error",summary:"Error",detail:"Revise los cambios"});
+      error: (err) => {
+        console.error('Error al actualizar el vehículo', err);
+        this.messageService.add({ severity: "error", summary: "Error", detail: "Hubo un error al actualizar el vehículo" });
       }
-
-    })
+    });
   }
+  
+  
 
 }

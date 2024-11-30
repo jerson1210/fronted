@@ -24,7 +24,7 @@ export class PaqueteComponent {
   ngOnInit():void{
 
   }
-  getAllVehiculos(){
+  getAllPaquete(){
     this.paqueteService.getPaquete().subscribe((data)=>{
       this.paquete=data;
     })
