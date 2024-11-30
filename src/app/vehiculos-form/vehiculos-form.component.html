@@ -4,24 +4,29 @@
         <form [formGroup]="formVehiculo"(ngSubmit)="edit?updateVehiculo():createVehiculo()" 
         class="flex flex-column gap-2">
             <div class="field flex flex-column gap-1">
-                <label for="TipoVehiculo">TipoVehiculo</label>
-                <input type="text" pInputText formControlName="TipoVehiculo" />
+                <label for="tipoVehiculo">TipoVehiculo</label>
+                <input type="text" pInputText formControlName="tipoVehiculo" />
 
             </div>
             <div class="field flex flex-column gap-1">
-                <label for="PesoVehiculo">PesoVehiculo</label>
-                <p-inputNumber inputId="integeronly" formControlName="PesoVehiculo" />
+                <label for="pesoVehiculo">PesoVehiculo</label>
+                <p-inputNumber inputId="integeronly" formControlName="pesoVehiculo" />
 
             </div>
   
             <div class="field flex flex-column gap-1">
-                <label for="Marca">Marca</label>
-                <input type="text" pInputText formControlName="Marca" />
+                <label for="marca">Marca</label>
+                <input type="text" pInputText formControlName="marca" />
 
             </div>
             <div class="field flex flex-column gap-1">
-                <label for="Estado">Estado</label>
-                <input type="text" pInputText formControlName="Estado" />
+                <label for="estado">Estado</label>
+                <input type="text" pInputText formControlName="estado" />
+
+            </div>
+            <div class="field flex flex-column gap-1">
+                <label for="placa">placa</label>
+                <input type="text" pInputText formControlName="placa" />
 
             </div>
             <div class="flex gap-2">
