@@ -8,7 +8,7 @@ import { vehiculos } from '../models/vehiculo';
   providedIn: 'root'
 })
 export class VehiculoService {
-  private apiUrl ="http://localhost:8080/book"
+  private apiUrl ="http://localhost:8080/vehiculo"
 
   constructor(private http:HttpClient) { }
 

@@ -21,13 +21,13 @@ export class ConductorComponent {
   conductor:conductor[]=[]
   
 
-  constructor(private conductorServide:ConductorService){}
+  constructor(private conductorService:ConductorService){}
 
   ngOnInit():void{
 
   }
   getAllVehiculos(){
-    this.conductorServide.getVehiculo().subscribe((data)=>{
+    this.conductorService.getConductor().subscribe((data)=>{
       this.conductor=data;
     })
   }

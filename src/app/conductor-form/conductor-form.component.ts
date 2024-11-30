@@ -40,7 +40,7 @@ export class ConductorFormComponent {
     }
   }
   getConductorId(id:number){
-    this.conductorService.getVehiculoId(id).subscribe({
+    this.conductorService.getCondcutorId(id).subscribe({
       next:foundCoductor=>{
         this.formConductor.patchValue(foundCoductor);
       },
@@ -57,7 +57,7 @@ export class ConductorFormComponent {
       this.messageService.add({severity:"error",summary:"Error",detail:"Revise los campos"});
         return
     }
-    this.conductorService.createVehiculo(this.formConductor.value).subscribe({
+    this.conductorService.createConductor(this.formConductor.value).subscribe({
       next:()=>{
         this.messageService.add({severity:"guardado",summary:"guardado",detail:"conductor guardado"});
       },
@@ -73,7 +73,7 @@ export class ConductorFormComponent {
       this.messageService.add({severity:"error",summary:"Error",detail:"Revise los cambios"});
         return
     }
-    this.conductorService.actualizarVehiculo(this.formConductor.value).subscribe({
+    this.conductorService.actualizarConductor(this.formConductor.value).subscribe({
       next:()=>{
         this.messageService.add({severity:"guardado",summary:"guardado",detail:"conductor actualizado"});
       },

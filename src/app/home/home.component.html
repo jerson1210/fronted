@@ -1,6 +1,19 @@
 <!-- Sidebar -->
 <button pButton label="Abrir Menu" icon="pi pi-bars" (click)="sidebarVisible = true"></button>
+<div class="home-container">
+  <h1>Bienvenido a la página de inicio</h1>
 
+  <!-- Verifica si el usuario está autenticado -->
+  <div *ngIf="usuario">
+    <p>¡Hola, {{ usuario.nombre }}!</p>
+    <p>Correo: {{ usuario.email }}</p>
+    <!-- Aquí puedes agregar más detalles del usuario si están disponibles -->
+  </div>
+
+  <div *ngIf="!usuario">
+    <p>No estás autenticado. Por favor, inicia sesión.</p>
+  </div>
+</div>
 <p-sidebar [(visible)]="sidebarVisible" position="left" [modal]="true" [showCloseIcon]="true">
     <h3>Panel de Navegación</h3>
     <ul>

@@ -1,1 +1,60 @@
-<p>usuario-form works!</p>
+<p-toast></p-toast>
+<div class="flex justify-content-center align-items-center min-h-screen w-full">
+  <p-card header="Formulario de Usuario" class="w-10">
+    <form 
+      [formGroup]="formUsuario" 
+      (ngSubmit)="edit ? updateUsuario() : createUsuario()" 
+      class="flex flex-column gap-2">
+      
+      
+      
+      <!-- Nombre -->
+      <div class="field flex flex-column gap-1">
+        <label for="Nombre">Nombre</label>
+        <input type="text" pInputText formControlName="Nombre" />
+      </div>
+      
+      <!-- Apellido -->
+      <div class="field flex flex-column gap-1">
+        <label for="Apellido">Apellido</label>
+        <input type="text" pInputText formControlName="Apellido" />
+      </div>
+      
+      <!-- Correo -->
+      <div class="field flex flex-column gap-1">
+        <label for="Correo">Correo</label>
+        <input 
+          type="email" 
+          pInputText 
+          formControlName="Correo" 
+          placeholder="example@domain.com" />
+      </div>
+      <div class="field flex flex-column gap-1">
+        <label for="Telefono">Teléfono</label>
+        <p-inputNumber 
+          inputId="Telefono" 
+          formControlName="Telefono" 
+          [mode]="'decimal'" 
+          [minFractionDigits]="0" 
+          [maxFractionDigits]="0" 
+          [useGrouping]="false"  
+          (onInput)="onTelefonoChange($event)">
+        </p-inputNumber>
+      </div>
+      <!-- Contraseña -->
+      <div class="field flex flex-column gap-1">
+        <label for="contrasena">Contraseña</label>
+        <input 
+          type="password" 
+          pInputText 
+          formControlName="contrasena" 
+          placeholder="Ingrese su contraseña" />
+      </div>
+      
+      <!-- Botón Guardar -->
+      <div class="flex gap-2">
+        <p-button label="Guardar" [loading]="isSaveInProgress" type="submit"></p-button>
+      </div>
+    </form>
+  </p-card>
+</div>

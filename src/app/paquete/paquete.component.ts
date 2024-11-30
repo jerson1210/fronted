@@ -25,7 +25,7 @@ export class PaqueteComponent {
 
   }
   getAllVehiculos(){
-    this.paqueteService.getVehiculo().subscribe((data)=>{
+    this.paqueteService.getPaquete().subscribe((data)=>{
       this.paquete=data;
     })
   }

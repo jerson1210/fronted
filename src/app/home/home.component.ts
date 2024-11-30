@@ -7,6 +7,7 @@ import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SidebarModule } from 'primeng/sidebar';
+import { UsuarioService } from '../services/usuario.service';
 
 @Component({
   selector: 'app-home',
@@ -16,12 +17,13 @@ import { SidebarModule } from 'primeng/sidebar';
 })
 export class HomeComponent {
   sidebarVisible: boolean = false;
-  vehiculos:vehiculos[]=[]
+  vehiculos:vehiculos[]=[];
+  usuario:any;
 
-  constructor(private vehiculoService:VehiculoService){}
+  constructor(private vehiculoService:VehiculoService,private usuarioService:UsuarioService){}
 
   ngOnInit():void{
-
+    this.usuario = this.usuarioService.obtenerUsuario();
   }
   getAllVehiculos(){
     this.vehiculoService.getVehiculo().subscribe((data)=>{

@@ -1,47 +1,63 @@
 <div class="login-container">
-    <!-- Panel Izquierdo -->
-    <div class="left-panel">
-      <h1>Welcome back</h1>
+  <!-- Panel Izquierdo -->
+  <div class="left-panel">
+    <h1>Welcome back</h1>
+    <p>
+      Lorem ipsum is placeholder text commonly used in the graphic, print, and
+      publishing industries for previewing layouts and visual mockups.
+    </p>
+  </div>
+
+  <!-- Panel Derecho -->
+  <div class="right-panel">
+    <div class="login-card">
+      <h2>Sign In</h2>
       <p>
-        Lorem ipsum is placeholder text commonly used in the graphic, print, and
-        publishing industries for previewing layouts and visual mockups.
+        Don't have an account?
+        <a href="/usuario-form/new" class="sign-up-link">Sign Up</a>
       </p>
-    </div>
-  
-    <!-- Panel Derecho -->
-    <div class="right-panel">
-      <div class="login-card">
-        <h2>Sign In</h2>
-        <p>
-          Don't have an account?
-          <a href="#" class="sign-up-link">Sign Up</a>
-        </p>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <input
-              type="email"
-              placeholder="Email"
-              formControlName="email"
-              class="form-control"
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="password"
-              placeholder="Password"
-              formControlName="password"
-              class="form-control"
-            />
-          </div>
-          <a href="#" class="forgot-password-link">Forgot your password?</a>
-          <button type="submit" class="btn btn-primary">Sign In</button>
-        </form>
-        <div class="or-section">or</div>
-        <div class="social-login">
-          <button class="google-btn">Google</button>
-          <button class="facebook-btn">Facebook</button>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <input
+            type="text"
+            placeholder="Nombre"
+            formControlName="nombre"
+            class="form-control"
+          />
+          <!-- Muestra el error si el nombre no es válido -->
+          <small *ngIf="loginForm.get('nombre')?.invalid && loginForm.get('nombre')?.touched">
+            Por favor, ingresa un nombre válido (solo letras).
+          </small>
         </div>
+        <div class="form-group">
+          <input
+            type="password"
+            placeholder="Password"
+            formControlName="password"
+            class="form-control"
+          />
+          <!-- Muestra el error si la contraseña no cumple con los requisitos -->
+          <small *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            La contraseña debe tener al menos 6 caracteres.
+          </small>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">
+          Iniciar Sesión
+        </button>
+      </form>
+      
+
+      <!-- Mensaje de error general -->
+      <p *ngIf="errorMessage" style="color: red; margin-top: 10px;">
+        {{ errorMessage }}
+      </p>
+
+      <!-- Sección para iniciar sesión con redes sociales -->
+      <div class="or-section">or</div>
+      <div class="social-login">
+        <button class="google-btn">Google</button>
+        <button class="facebook-btn">Facebook</button>
       </div>
     </div>
   </div>
-  
+</div>

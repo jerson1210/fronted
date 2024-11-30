@@ -44,7 +44,7 @@ export class PaqueteFormComponent {
     }
   }
   getPaqueteId(id:number){
-    this.paqueteService.getVehiculoId(id).subscribe({
+    this.paqueteService.getPaqueteId(id).subscribe({
       next:foundPaquete=>{
         this.formPaquete.patchValue(foundPaquete);
       },
@@ -61,7 +61,7 @@ export class PaqueteFormComponent {
       this.messageService.add({severity:"error",summary:"Error",detail:"Revise los campos"});
         return
     }
-    this.paqueteService.createVehiculo(this.formPaquete.value).subscribe({
+    this.paqueteService.createPaquete(this.formPaquete.value).subscribe({
       next:()=>{
         this.messageService.add({severity:"guardado",summary:"guardado",detail:"vehiculo guardado"});
       },
@@ -77,7 +77,7 @@ export class PaqueteFormComponent {
       this.messageService.add({severity:"error",summary:"Error",detail:"Revise los cambios"});
         return
     }
-    this.paqueteService.actualizarVehiculo(this.formPaquete.value).subscribe({
+    this.paqueteService.actualizarPaquete(this.formPaquete.value).subscribe({
       next:()=>{
         this.messageService.add({severity:"guardado",summary:"guardado",detail:"vehiculo actualizado"});
       },
