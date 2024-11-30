@@ -29,10 +29,10 @@ export class UsuarioFormComponent {
   constructor(private fb:FormBuilder,private usuarioServide:UsuarioService,private activatedRoute:ActivatedRoute,private messageService:MessageService,private navrouter:Router){
     this.formUsuario = this.fb.group({
       IdUsuario: [null],  // Id del usuario, puede ser un número
-      Nombre: ['', Validators.required],       // Campo de nombre con validación requerida
-      Apellido: ['', Validators.required],     // Campo de apellido con validación requerida
-      Correo: ['', [Validators.required, Validators.email]],  // Campo de correo con validación de email
-      Telefono: [null, [Validators.required, Validators.pattern('^[0-9]{10}$')]],  // Teléfono con validación numérica y longitud de 10 dígitos
+      nombre: ['', Validators.required],       // Campo de nombre con validación requerida
+      apellido: ['', Validators.required],     // Campo de apellido con validación requerida
+      correo: ['', [Validators.required, Validators.email]],  // Campo de correo con validación de email
+      telefono: [null, [Validators.required, Validators.pattern('^[0-9]{10}$')]],  // Teléfono con validación numérica y longitud de 10 dígitos
       contrasena: ['', [Validators.required, Validators.minLength(6)]],  // Contraseña con validación mínima de 6 caracteres
     });
   }

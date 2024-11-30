@@ -32,12 +32,12 @@
         <div class="form-group">
           <input
             type="password"
-            placeholder="Password"
-            formControlName="password"
+            placeholder="contrasena"
+            formControlName="contrasena"
             class="form-control"
           />
           <!-- Muestra el error si la contraseña no cumple con los requisitos -->
-          <small *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          <small *ngIf="loginForm.get('contrasena')?.invalid && loginForm.get('contrasena')?.touched">
             La contraseña debe tener al menos 6 caracteres.
           </small>
         </div>
