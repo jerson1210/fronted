@@ -8,6 +8,8 @@ import { ConductorFormComponent } from './conductor-form/conductor-form.componen
 import { UsuarioComponent } from './usuario/usuario.component';
 import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
 import { HomeConductorComponent } from './home-conductor/home-conductor.component';
+import { AsignarRutaComponent } from './asignar-ruta/asignar-ruta.component';
+import { RutaComponent } from './ruta/ruta.component';
 
 
 export const routes: Routes = [
@@ -17,7 +19,16 @@ export const routes: Routes = [
         component:HomeComponent,
         title:"pagina Inicio"
     },
-
+    {
+        path:"asignarRuta",
+        component:AsignarRutaComponent,
+        title:"pagina Inicio"
+    },
+    {
+        path:"ruta",
+        component:RutaComponent,
+        title:"pagina Inicio"
+    },
     {
         path:"vehiculos-form",
         component:VehiculosFormComponent,
@@ -30,7 +41,7 @@ export const routes: Routes = [
     },
     { path: 'vehiculos-form/:idVehiculo', component: VehiculosFormComponent } ,
     {
-        path:"paquete-form/:id",
+        path:"paquete-form",
         component:PaqueteFormComponent,
         title:"Formulario Vehiculos"
     },
@@ -40,7 +51,7 @@ export const routes: Routes = [
         title:"Formulario Vehiculos"
     },
     {
-        path:"conductor-form/:id",
+        path:"conductor-form",
         component:ConductorFormComponent,
         title:"Formulario Vehiculos"
     },

@@ -1,4 +1,3 @@
-import { usuario } from "./usuario";
 
 // vehiculo.model.ts
 export interface vehiculo {

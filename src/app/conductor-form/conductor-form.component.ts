@@ -8,6 +8,7 @@ import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CardModule } from 'primeng/card';
+import { conductor } from '../models/conductor';
 
 @Component({
   selector: 'app-conductor-form',
@@ -20,20 +21,20 @@ export class ConductorFormComponent {
   isSaveInProgress:boolean=false;
   edit:boolean=false;
 
-  constructor(private fb:FormBuilder,private conductorService:ConductorService,private activatedRoute:ActivatedRoute,private messageService:MessageService,private navrouter:Router){
+  constructor(private fb:FormBuilder,private router:Router,private conductorService:ConductorService,private activatedRoute:ActivatedRoute,private messageService:MessageService,private navrouter:Router){
     this.formConductor = this.fb.group({
-      IdConductor: [null], // Asegúrate de que el id sea numérico
-      Nombre: ['', Validators.required], // Campo de texto con validación requerida
-      Apellido: ['', Validators.required], // Campo de texto con validación requerida
-      Correo: ['', [Validators.required, Validators.email]], // Campo de correo con validación requerida y formato de email
-      Telefono: [null, [Validators.required, Validators.pattern('^[0-9]*$')]], // Número con validación requerida
+      idConductor: [null], // Asegúrate de que el id sea numérico
+      nombre: ['', Validators.required], // Campo de texto con validación requerida
+      apellido: ['', Validators.required], // Campo de texto con validación requerida
+      correo: ['', [Validators.required, Validators.email]], // Campo de correo con validación requerida y formato de email
+      telefono: [null, [Validators.required, Validators.pattern('^[0-9]*$')]], // Número con validación requerida
       contrasena: ['', [Validators.required, Validators.minLength(6)]] // Contraseña con longitud mínima requerida
     });
 
   }
 
   ngOnInit():void{
-    let id=this.activatedRoute.snapshot.paramMap.get("IdConductor")
+    let id=this.activatedRoute.snapshot.paramMap.get("idConductor")
     if(id && id !== "new"){
       this.edit=true
       this.getConductorId(+id!)
@@ -52,20 +53,48 @@ export class ConductorFormComponent {
     })
   }
 
-  createConductor(){
-    if(this.formConductor.invalid){
-      this.messageService.add({severity:"error",summary:"Error",detail:"Revise los campos"});
-        return
+  createConductor() {
+    if (this.formConductor.invalid) {
+      this.messageService.add({ severity: "error", summary: "Error", detail: "Revise los campos" });
+      return;
     }
-    this.conductorService.createConductor(this.formConductor.value).subscribe({
-      next:()=>{
-        this.messageService.add({severity:"guardado",summary:"guardado",detail:"conductor guardado"});
-      },
-      error:()=>{
-        this.messageService.add({severity:"error",summary:"Error",detail:"Revise los campos"});
-      }
 
-    })
+    // Obtener el usuario desde localStorage
+    const usuario = localStorage.getItem('usuario');
+    if (!usuario) {
+      this.messageService.add({ severity: "error", summary: "Error", detail: "No se encontró usuario en el localStorage" });
+      return;
+    }
+
+    const usuarioData = JSON.parse(usuario);  // Ahora 'usuario' es de tipo 'string', no 'null'
+    const usuarioId = usuarioData ? usuarioData.idUsuario : null;
+
+    if (!usuarioId) {
+      this.messageService.add({ severity: "error", summary: "Error", detail: "Usuario no encontrado" });
+      return;
+    }
+
+    // Preparar los datos del vehículo, agregando el usuario con el idUsuario
+    const conductorData: conductor = {
+      nombre: this.formConductor.value.nombre,
+      apellido: this.formConductor.value.apellido,
+      correo: this.formConductor.value.correo,
+      telefono: this.formConductor.value.telefono,
+      contrasena: this.formConductor.value.estado,
+      usuario: { idUsuario: usuarioId }  // Se incluye el idUsuario en el cuerpo
+    };
+
+    // Llamar al servicio para crear el vehículo
+    this.conductorService.createConductor(conductorData).subscribe({
+      next: () => {
+        this.messageService.add({ severity: "success", summary: "Guardado", detail: "Vehículo guardado" });
+        this.router.navigateByUrl("/conductor"); // Ajusta la ruta a donde necesites
+      },
+      error: (err) => {
+        console.error('Error al guardar el vehículo', err);
+        this.messageService.add({ severity: "error", summary: "Error", detail: "Hubo un error al guardar el vehículo" });
+      }
+    });
   }
 
   updateConductor(){

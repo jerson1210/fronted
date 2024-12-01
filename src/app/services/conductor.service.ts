@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-
+import { conductorTotal } from '../models/conductorTotal';
 import { conductor } from '../models/conductor';
 import { loginRequest } from '../models/loginRequest';
 
@@ -15,7 +15,7 @@ export class ConductorService {
   constructor(private http:HttpClient) { }
 
   getConductor():Observable<conductor[]>{
-    return this.http.get<conductor[]>(this.apiUrl)
+    return this.http.get<conductor[]>(`${this.apiUrl}/listar`)
   }
 
   getCondcutorId(id: number): Observable<conductor> {
@@ -23,13 +23,13 @@ export class ConductorService {
   }
   
 
-  createConductor(vehiculo: conductor): Observable<conductor> {
-    return this.http.post<conductor>(`${this.apiUrl}/crear`, vehiculo);
+  createConductor(conductor: conductor): Observable<conductor> {
+    return this.http.post<conductor>(`${this.apiUrl}/crear`, conductor);
   }
   
 
-  actualizarConductor(vehiculo: conductor): Observable<conductor> {
-    return this.http.put<conductor>(`${this.apiUrl}/actualizar`, vehiculo);
+  actualizarConductor(conductor: conductor): Observable<conductor> {
+    return this.http.put<conductor>(`${this.apiUrl}/actualizar`, conductor);
   }
   
 
@@ -39,6 +39,10 @@ export class ConductorService {
 
   validarConductor(loginRequestt: loginRequest): Observable<conductor> {
     return this.http.post<conductor>(`${this.apiUrl}/login`, loginRequestt);
+  }
+
+  listarConductorPorUsuario(idUsuario: number): Observable<conductorTotal[]> {
+    return this.http.get<conductorTotal[]>(`${this.apiUrl}/listar/${idUsuario}`);
   }
 
 }

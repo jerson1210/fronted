@@ -1,59 +1,84 @@
-<!-- Sidebar -->
-<button pButton label="Abrir Menu" icon="pi pi-bars" (click)="sidebarVisible = true"></button>
-
-<p-sidebar [(visible)]="sidebarVisible" position="left" [modal]="true" [showCloseIcon]="true">
-    <h3>Panel de Navegación</h3>
-    <ul>
-      <li><a routerLink="">Vehículos</a></li>
-      <li><a routerLink="/paquete">Paquete</a></li>
-      <li><a routerLink="/ruta">Ruta</a></li>
-      <li><a routerLink="/conductor">Conductor</a></li>
-    </ul>
-  </p-sidebar>
-  
-  <!-- Header with application name and user profile -->
+<div class="container">
   <div class="header">
-    <div class="logo">
-      <img src="assets/logo.png" alt="Logo" />
-      <h1>ROUTEFLEX</h1>
+    <h2 class="title">Conductor</h2>
+
+  </div>
+  <div class="dashboard">
+    <div class="card">
+      <h3>
+        <a routerLink="/paquete">Paquetes</a>
+      </h3>
     </div>
-    <div class="user-info">
-      <p>Elías Castillo</p>
-      <img src="assets/user-avatar.png" alt="User Avatar" class="user-avatar" />
+    <div class="card">
+      <h3>
+        <a routerLink="/ruta">Rutas</a>
+      </h3>
+    </div>
+    <div class="card">
+      <h3>
+        <a routerLink="/asignarRuta">Asignar Ruta</a>
+      </h3>
+    </div>
+    <div class="card">
+      <h3>
+        <a routerLink="/">Vehículos</a>
+      </h3>
+    </div>
+    <div class="card">
+      <h3>
+        <a routerLink="/conductor">Conductores</a>
+      </h3>
     </div>
   </div>
-  
-  <!-- Table of vehicles -->
-  <p-table [value]="conductor" class="p-datatable-striped">
-    <ng-template pTemplate="header">
+
+  <div class="actions">
+    <a [routerLink]="'/conductor-form'" class="p-button font-bold">Crear</a>
+
+  </div>
+
+  <!-- Tabla de vehículos -->
+  <div *ngIf="conductor.length === 0" class="no-vehiculos-message">
+    <p>No se encontraron vehículos registrados para este usuario.</p>
+  </div>
+  <table *ngIf="conductor.length > 0" class="styled-table">
+    <thead>
       <tr>
-        <th>Id</th>
+        <th>ID</th>
         <th>Nombre</th>
         <th>Apellido</th>
-        <th>Correo</th>
         <th>Telefono</th>
-        
+        <th>Correo</th>
+        <th>Contraseña</th>
+        <th>Acciones</th>  <!-- Columna para las acciones de eliminar -->
       </tr>
-    </ng-template>
-  
-    <ng-template pTemplate="body" let-conductor>
-      <tr>
-        <td>{{ conductor.IdConductor}}</td>
-        <td>{{ conductor.Nombre}}</td>
-        <td>{{ conductor.Apellido }}</td>
-        <td>{{ conductor.Correo }}</td>
-        <td>{{ conductor.Telefono }}</td>
-        
+    </thead>
+    <tbody>
+      <tr *ngFor="let conductor of conductor">
+        <td>{{ conductor.idConductor }}</td>
+        <td>{{ conductor.nombre }}</td>
+        <td>{{ conductor.apellido }} </td>
+        <td>{{ conductor.correo }}</td>
+        <td>{{ conductor.telefono }}</td>
+        <td>{{ conductor.contrasena  }}</td>
         <td>
-          <button pButton label="Actualizar" icon="pi pi-refresh" class="p-button-info"></button>
-          <button pButton label="Eliminar" icon="pi pi-trash" class="p-button-danger"></button>
+          <button (click)="seleccionConductor(conductor.idConductor)" class="p-button p-button-danger">Eliminar</button>
+        </td>
+        <td>
+          <button pButton label="Actualizar" 
+          (click)="goToUpdateForm(conductor.idConductor)" 
+          class="p-button p-button-danger">acatualizar</button>
         </td>
       </tr>
-    </ng-template>
-  </p-table>
-  
-  <!-- Button to create a new vehicle -->
-  <div class="p-d-flex p-jc-between">
-    <button pButton label="Crear" icon="pi pi-plus" class="p-button-success" routerLink="/conductor-form/new"></button>
+    </tbody>
+  </table>
+  <div *ngIf="mostrarModal" class="modal">
+    <div class="modal-content">
+      <h3>Confirmar eliminación</h3>
+      <p>¿Estás seguro de que deseas eliminar el conductor?</p>
+      <div class="modal-actions">
+        <button (click)="eliminarVehiculo()" class="p-button p-button-danger">Sí, eliminar</button>
+        <button (click)="cerrarModal()" class="p-button">Cancelar</button>
+      </div>
+    </div>
   </div>
-  
+</div>
