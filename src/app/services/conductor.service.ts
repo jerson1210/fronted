@@ -19,7 +19,7 @@ export class ConductorService {
   }
 
   getCondcutorId(id: number): Observable<conductor> {
-    return this.http.get<conductor>(`${this.apiUrl}/listar/${id}`);
+    return this.http.get<conductor>(`${this.apiUrl}/obtener/${id}`);
   }
   
 

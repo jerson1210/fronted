@@ -37,7 +37,7 @@
   </div>
 
   <!-- Tabla de vehículos -->
-  <div *ngIf="conductor.length === 0" class="no-vehiculos-message">
+  <div *ngIf="conductor.length === 0" class="no-conductor-message">
     <p>No se encontraron vehículos registrados para este usuario.</p>
   </div>
   <table *ngIf="conductor.length > 0" class="styled-table">
@@ -64,9 +64,7 @@
           <button (click)="seleccionConductor(conductor.idConductor)" class="p-button p-button-danger">Eliminar</button>
         </td>
         <td>
-          <button pButton label="Actualizar" 
-          (click)="goToUpdateForm(conductor.idConductor)" 
-          class="p-button p-button-danger">acatualizar</button>
+          <button pButton label=""(click)="goToUpdateFormConductor(conductor.idConductor)">Actualizar</button>
         </td>
       </tr>
     </tbody>
@@ -76,7 +74,7 @@
       <h3>Confirmar eliminación</h3>
       <p>¿Estás seguro de que deseas eliminar el conductor?</p>
       <div class="modal-actions">
-        <button (click)="eliminarVehiculo()" class="p-button p-button-danger">Sí, eliminar</button>
+        <button (click)="eliminarConductor()" class="p-button p-button-danger">Sí, eliminar</button>
         <button (click)="cerrarModal()" class="p-button">Cancelar</button>
       </div>
     </div>

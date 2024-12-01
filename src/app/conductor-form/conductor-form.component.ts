@@ -34,13 +34,14 @@ export class ConductorFormComponent {
   }
 
   ngOnInit():void{
-    let id=this.activatedRoute.snapshot.paramMap.get("idConductor")
+    const id=this.activatedRoute.snapshot.paramMap.get("idConductor")
+    console.log("ID conductor:", id);
     if(id && id !== "new"){
       this.edit=true
       this.getConductorId(+id!)
     }
   }
-  getConductorId(id:number){
+  getConductorId(id:number):void{
     this.conductorService.getCondcutorId(id).subscribe({
       next:foundCoductor=>{
         this.formConductor.patchValue(foundCoductor);
@@ -80,7 +81,7 @@ export class ConductorFormComponent {
       apellido: this.formConductor.value.apellido,
       correo: this.formConductor.value.correo,
       telefono: this.formConductor.value.telefono,
-      contrasena: this.formConductor.value.estado,
+      contrasena: this.formConductor.value.contrasena,
       usuario: { idUsuario: usuarioId }  // Se incluye el idUsuario en el cuerpo
     };
 
@@ -97,20 +98,24 @@ export class ConductorFormComponent {
     });
   }
 
-  updateConductor(){
-    if(this.formConductor.invalid){
-      this.messageService.add({severity:"error",summary:"Error",detail:"Revise los cambios"});
-        return
+  updateConductor() {
+    if (this.formConductor.invalid) {
+      this.messageService.add({ severity: "error", summary: "Error", detail: "Revise los cambios" });
+      return;
     }
-    this.conductorService.actualizarConductor(this.formConductor.value).subscribe({
-      next:()=>{
-        this.messageService.add({severity:"guardado",summary:"guardado",detail:"conductor actualizado"});
+  
+    const conductorData = this.formConductor.value;  
+  
+    this.conductorService.actualizarConductor(conductorData).subscribe({
+      next: () => {
+        this.messageService.add({ severity: "success", summary: "Guardado", detail: "conductor actualizado" });
+        this.router.navigateByUrl("/conductor");
       },
-      error:()=>{
-        this.messageService.add({severity:"error",summary:"Error",detail:"Revise los cambios"});
+      error: (err) => {
+        console.error('Error al actualizar el conductor', err);
+        this.messageService.add({ severity: "error", summary: "Error", detail: "Hubo un error al actualizar el conductor" });
       }
-
-    })
+    });
   }
 
 }

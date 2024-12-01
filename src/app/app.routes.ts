@@ -30,6 +30,11 @@ export const routes: Routes = [
         title:"pagina Inicio"
     },
     {
+        path:"ruta-form",
+        component:RutaComponent,
+        title:"pagina Inicio"
+    },
+    {
         path:"vehiculos-form",
         component:VehiculosFormComponent,
         title:"Formulario Vehiculos"
@@ -40,6 +45,8 @@ export const routes: Routes = [
         title:"Formulario Vehiculos"
     },
     { path: 'vehiculos-form/:idVehiculo', component: VehiculosFormComponent } ,
+    { path: 'paquete-form/:idPaquete', component: PaqueteFormComponent } ,
+    { path: 'conductor-form/:idConductor', component: ConductorFormComponent } ,
     {
         path:"paquete-form",
         component:PaqueteFormComponent,

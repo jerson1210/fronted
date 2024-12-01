@@ -12,6 +12,7 @@ import { CalendarModule } from 'primeng/calendar';
 
 
 import { CardModule } from 'primeng/card';
+import { paquete } from '../models/paquete';
 
 @Component({
   selector: 'app-paquete-form',
@@ -24,67 +25,106 @@ export class PaqueteFormComponent {
   isSaveInProgress:boolean=false;
   edit:boolean=false;
 
-  constructor(private fb:FormBuilder,private paqueteService:PaqueteService,private activatedRoute:ActivatedRoute,private messageService:MessageService,private navrouter:Router){
+  constructor(private fb:FormBuilder,private paqueteService:PaqueteService,private activatedRoute:ActivatedRoute,private messageService:MessageService,private router:Router){
     this.formPaquete = this.fb.group({
-      IdPaqueteEnvio: [null], // Asegúrate de que el id sea numérico
-      Nombre: ['', Validators.required], // Campo de texto con validación requerida
-      Numero: [null, [Validators.required, Validators.pattern('^[0-9]*$')]], // Número con validación requerida
-      Direccion: ['', Validators.required], // Campo de texto con validación requerida
-      PesoPaquete: [null, [Validators.required, Validators.pattern('^[0-9]*$')]], // Peso numérico
-      Fecha: ['', Validators.required] // Campo de texto para fecha con validación requerida
+      idPaqueteEnvio: [null], // Asegúrate de que el id sea numérico
+      nombre: ['', Validators.required], // Campo de texto con validación requerida
+      numero: [null, [Validators.required, Validators.pattern('^[0-9]*$')]], // Número con validación requerida
+      direccion: ['', Validators.required], // Campo de texto con validación requerida
+      pesoPaquete: [null, [Validators.required, Validators.pattern('^[0-9]*$')]], // Peso numérico
+      fecha: ['', Validators.required] // Campo de texto para fecha con validación requerida
     });
 
   }
 
-  ngOnInit():void{
-    let id=this.activatedRoute.snapshot.paramMap.get("IdPaqueteEnvio")
-    if(id && id !== "new"){
-      this.edit=true
-      this.getPaqueteId(+id!)
+  ngOnInit(): void {
+    const id = this.activatedRoute.snapshot.paramMap.get('idPaquete');
+    console.log("ID Paquete:", id);  // Agrega esto para verificar el ID
+    if (id && id !== 'new') {
+      this.edit = true;
+      this.getPaqueteId(+id);  // Usamos el ID para cargar los datos
     }
   }
-  getPaqueteId(id:number){
+  getPaqueteId(id: number): void {
     this.paqueteService.getPaqueteId(id).subscribe({
-      next:foundPaquete=>{
-        this.formPaquete.patchValue(foundPaquete);
+      next: (paquete) => {
+        console.log('Datos del Paquete:', paquete);  // Verifica que los datos se están recibiendo
+        this.formPaquete.patchValue(paquete); // Rellenamos el formulario con los datos del vehículo
       },
-      error:()=>{
-        this.messageService.add({severity:"error",summary:"Error",detail:"No Encontro"});
-        //this.navrouter.navigateByUrl("/")
+      error: (err) => {
+        console.error('Error al cargar el paquete', err);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo cargar el vehículo' });
       }
-
-    })
+    });
   }
 
-  createPaquete(){
-    if(this.formPaquete.invalid){
-      this.messageService.add({severity:"error",summary:"Error",detail:"Revise los campos"});
-        return
+  createPaquete() {
+    if (this.formPaquete.invalid) {
+      this.messageService.add({ severity: "error", summary: "Error", detail: "Revise los campos" });
+      return;
     }
-    this.paqueteService.createPaquete(this.formPaquete.value).subscribe({
-      next:()=>{
-        this.messageService.add({severity:"guardado",summary:"guardado",detail:"vehiculo guardado"});
-      },
-      error:()=>{
-        this.messageService.add({severity:"error",summary:"Error",detail:"Revise los campos"});
-      }
 
-    })
+    // Obtener el usuario desde localStorage
+    const usuario = localStorage.getItem('usuario');
+    if (!usuario) {
+      this.messageService.add({ severity: "error", summary: "Error", detail: "No se encontró usuario en el localStorage" });
+      return;
+    }
+
+    const usuarioData = JSON.parse(usuario);  // Ahora 'usuario' es de tipo 'string', no 'null'
+    const usuarioId = usuarioData ? usuarioData.idUsuario : null;
+
+    if (!usuarioId) {
+      this.messageService.add({ severity: "error", summary: "Error", detail: "Usuario no encontrado" });
+      return;
+    }
+    const fechaSeleccionada = this.formPaquete.value.fecha;
+
+// Convertir a string si es necesario
+const fechaComoString = fechaSeleccionada instanceof Date 
+  ? fechaSeleccionada.toISOString().split('T')[0] // Formato "yyyy-mm-dd"
+  : fechaSeleccionada;
+
+    // Preparar los datos del vehículo, agregando el usuario con el idUsuario
+    const paqueteData: paquete = {
+      nombre: this.formPaquete.value.nombre,
+      numero: this.formPaquete.value.numero,
+      direccion: this.formPaquete.value.direccion,
+      pesoPaquete: this.formPaquete.value.pesoPaquete,
+      fecha: this.formPaquete.value.fecha,
+      usuario: { idUsuario: usuarioId }  // Se incluye el idUsuario en el cuerpo
+    };
+
+    // Llamar al servicio para crear el vehículo
+    this.paqueteService.createPaquete(paqueteData).subscribe({
+      next: () => {
+        this.messageService.add({ severity: "success", summary: "Guardado", detail: "paquete guardado" });
+        this.router.navigateByUrl("/paquete"); // Ajusta la ruta a donde necesites
+      },
+      error: (err) => {
+        console.error('Error al guardar el vehículo', err);
+        this.messageService.add({ severity: "error", summary: "Error", detail: "Hubo un error al guardar el paquete" });
+      }
+    });
   }
 
-  updatePaquete(){
-    if(this.formPaquete.invalid){
-      this.messageService.add({severity:"error",summary:"Error",detail:"Revise los cambios"});
-        return
+  updatePaquete() {
+    if (this.formPaquete.invalid) {
+      this.messageService.add({ severity: "error", summary: "Error", detail: "Revise los cambios" });
+      return;
     }
-    this.paqueteService.actualizarPaquete(this.formPaquete.value).subscribe({
-      next:()=>{
-        this.messageService.add({severity:"guardado",summary:"guardado",detail:"vehiculo actualizado"});
+  
+    const paqueteData = this.formPaquete.value;  // Aquí ya tienes todos los campos, incluido el idVehiculo
+  
+    this.paqueteService.actualizarPaquete(paqueteData).subscribe({
+      next: () => {
+        this.messageService.add({ severity: "success", summary: "Guardado", detail: "Vehículo actualizado" });
+        this.router.navigateByUrl("/vehiculos");
       },
-      error:()=>{
-        this.messageService.add({severity:"error",summary:"Error",detail:"Revise los cambios"});
+      error: (err) => {
+        console.error('Error al actualizar el vehículo', err);
+        this.messageService.add({ severity: "error", summary: "Error", detail: "Hubo un error al actualizar el vehículo" });
       }
-
-    })
+    });
   }
 }

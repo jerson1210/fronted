@@ -1,0 +1,12 @@
+<div>
+    <h3>Selecciona los paquetes para la ruta</h3>
+    <div *ngFor="let paquete of paquetes">
+      <label>
+        <input type="checkbox" [(ngModel)]="paquete.seleccionado" (change)="onPackageSelect(paquete)">
+        {{ paquete.nombre }} - {{ paquete.direccion }}
+      </label>
+    </div>
+  </div>
+  
+  <button (click)="crearRuta()">Crear Ruta</button>
+  

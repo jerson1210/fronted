@@ -1,9 +1,12 @@
 export interface paquete{
-    IdPaqueteEnvio:number;
-    Nombre:String;
-    Numero:number;
-    Direccion:String;
-    PesoPaquete:number;
-    Fecha:String
+    
+    nombre:String;
+    numero:number;
+    direccion:String;
+    pesoPaquete:number;
+    fecha:String
+    usuario: {
+        idUsuario: number; // Relación con el usuario, solo es necesario el ID
+      };
 
 }    

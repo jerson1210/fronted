@@ -1,33 +1,33 @@
 <p-toast />
 <div class="flex  justify-content-center align-items-center min-h-screen w-ful">
-    <p-card header="Simple Card" class="w-10">
+    <p-card header="Formulario Paquete" class="w-10">
         <form [formGroup]="formPaquete"(ngSubmit)="edit?updatePaquete():createPaquete()" 
         class="flex flex-column gap-2">
             <div class="field flex flex-column gap-1">
-                <label for="Nombre">Nombre</label>
-                <input type="text" pInputText formControlName="Nombre" />
+                <label for="nombre">Nombre</label>
+                <input type="text" pInputText formControlName="nombre" />
 
             </div>
             <div class="field flex flex-column gap-1">
-                <label for="Numero">Numero</label>
-                <p-inputNumber inputId="integeronly" formControlName="Numero" />
+                <label for="numero">Numero</label>
+                <p-inputNumber inputId="integeronly" formControlName="numero" />
 
             </div>
   
             <div class="field flex flex-column gap-1">
-                <label for="Direccion">Direccion</label>
-                <input type="text" pInputText formControlName="Direccion" />
+                <label for="direccion">Direccion</label>
+                <input type="text" pInputText formControlName="direccion" />
 
             </div>
             <div class="field flex flex-column gap-1">
-                <label for="PesoPaquete">PesoPaquete</label>
+                <label for="pesoPaquete">PesoPaquete</label>
                 
-                <p-inputNumber inputId="integeronly" formControlName="PesoPaquete" />
+                <p-inputNumber inputId="integeronly" formControlName="pesoPaquete" />
 
             </div>
             <div class="field flex flex-column gap-1">
-                <label for="Fecha">Fecha</label>
-                <p-calendar formControlName="Fecha" inputId="Fecha" dateFormat="yy-mm-dd" showIcon="true"></p-calendar>
+                <label for="fecha">Fecha</label>
+                <input type="text" pInputText formControlName="fecha" />
               </div>
             <div class="flex gap-2">
                 <p-button label="Guardar"[loading]="isSaveInProgress" type="ngSubmit" />

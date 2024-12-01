@@ -87,25 +87,25 @@ export class ConductorComponent implements OnInit {
   }
 
   // Confirma la eliminación
-  eliminarVehiculo(): void {
+  eliminarConductor(): void {
     if (this.conductorSelccionado) {
       this.conductorService.deleteConductor(this.conductorSelccionado).subscribe({
         next: () => {
-          alert('Vehículo eliminado exitosamente');
+          alert('conductor eliminado exitosamente');
           this.listarConductores(); // Actualiza la lista de vehículos
           this.cerrarModal(); // Cierra el modal
         },
         error: (error) => {
-          console.error('Error al eliminar vehículo:', error);
-          alert('No se pudo eliminar el vehículo.');
+          console.error('Error al eliminar conductor:', error);
+          alert('No se pudo eliminar el conductor.');
           this.cerrarModal(); // Cierra el modal
         }
       });
     }
   }
   
-  goToUpdateForm(idConductor: number): void {
+  goToUpdateFormConductor(idConductor: number): void {
     // Redirige a la ruta del formulario de actualización
-    this.router.navigate(['/vehiculos-form', idConductor]);
+    this.router.navigate(['/conductor-form', idConductor]);
   }
 }
