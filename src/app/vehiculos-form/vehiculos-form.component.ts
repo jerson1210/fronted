@@ -36,18 +36,19 @@ export class VehiculosFormComponent {
 
   }
 
-  ngOnInit():void{
-    let id=this.activatedRoute.snapshot.paramMap.get("idVehiculo")
-    if(id && id !== "new"){
-      this.edit=true
-      this.getVehiculoId(+id!)
+  ngOnInit(): void {
+    const id = this.activatedRoute.snapshot.paramMap.get('idVehiculo');
+    console.log("ID Vehiculo:", id);  // Agrega esto para verificar el ID
+    if (id && id !== 'new') {
+      this.edit = true;
+      this.getVehiculoId(+id);  // Usamos el ID para cargar los datos
     }
   }
   getVehiculoId(id: number): void {
     this.vehiculoService.getVehiculoId(id).subscribe({
       next: (vehiculo) => {
-        // Rellenar el formulario con los datos del vehículo
-        this.formVehiculo.patchValue(vehiculo);
+        console.log('Datos del vehículo:', vehiculo);  // Verifica que los datos se están recibiendo
+        this.formVehiculo.patchValue(vehiculo); // Rellenamos el formulario con los datos del vehículo
       },
       error: (err) => {
         console.error('Error al cargar el vehículo', err);
@@ -55,6 +56,9 @@ export class VehiculosFormComponent {
       }
     });
   }
+  
+  
+  
   
 
   createVehiculo() {
@@ -104,26 +108,18 @@ export class VehiculosFormComponent {
   
   
 
-  updateVehiculo(){
+  updateVehiculo() {
     if (this.formVehiculo.invalid) {
       this.messageService.add({ severity: "error", summary: "Error", detail: "Revise los cambios" });
       return;
     }
   
-    // Obtenemos los datos del vehículo
-    const vehiculoData = this.formVehiculo.value;
+    const vehiculoData = this.formVehiculo.value;  // Aquí ya tienes todos los campos, incluido el idVehiculo
   
-    // Aseguramos que el idVehiculo esté presente en los datos del formulario
-    if (!vehiculoData.idVehiculo) {
-      this.messageService.add({ severity: "error", summary: "Error", detail: "ID de vehículo no encontrado" });
-      return;
-    }
-  
-    // Llamar al servicio para actualizar el vehículo
     this.vehiculoService.actualizarVehiculo(vehiculoData).subscribe({
       next: () => {
         this.messageService.add({ severity: "success", summary: "Guardado", detail: "Vehículo actualizado" });
-        this.router.navigateByUrl("/vehiculos"); // Redirige a la lista de vehículos
+        this.router.navigateByUrl("/vehiculos");
       },
       error: (err) => {
         console.error('Error al actualizar el vehículo', err);

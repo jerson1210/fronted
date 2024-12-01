@@ -18,9 +18,9 @@ export class VehiculoService {
   }
 
   getVehiculoId(id: number): Observable<vehiculo> {
-    
-    return this.http.get<vehiculo>(`${this.apiUrl}/listar/${id}`);
+    return this.http.get<vehiculo>(`${this.apiUrl}/buscar/${id}`);
   }
+  
   
 
   createVehiculo(vehiculo: any): Observable<any> {

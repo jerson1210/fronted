@@ -1,11 +1,41 @@
 <div class="container">
-  <h2 class="title">Vehículos de {{ usuarioId }}</h2>
+  <div class="header">
+    <h2 class="title">Vehículos</h2>
 
+  </div>
+  <div class="dashboard">
+    <div class="card">
+      <h3>Paquetes</h3>
+      
+    </div>
+    <div class="card">
+      <h3>Rutas</h3>
+      
+    </div>
+    <div class="card">
+      <h3>AsignarRuta</h3>
+      
+    </div>
+    <div class="card">
+      <h3>Vehículos</h3>
+     
+    </div>
+    <div class="card">
+      <h3>Conductores</h3>
+    
+    </div>
+  </div>
+
+  <div class="actions">
+    <a [routerLink]="'/vehiculos-form'" class="p-button font-bold">Crear</a>
+
+  </div>
+
+  <!-- Tabla de vehículos -->
   <div *ngIf="vehiculos.length === 0" class="no-vehiculos-message">
     <p>No se encontraron vehículos registrados para este usuario.</p>
   </div>
-
-  <table class="table">
+  <table *ngIf="vehiculos.length > 0" class="styled-table">
     <thead>
       <tr>
         <th>ID</th>
@@ -14,10 +44,36 @@
         <th>Marca</th>
         <th>Placa</th>
         <th>Estado</th>
+        <th>Acciones</th>  <!-- Columna para las acciones de eliminar -->
       </tr>
     </thead>
-    <tbody id="tabla-vehiculos">
-      <!-- Aquí se insertarán dinámicamente las filas -->
+    <tbody>
+      <tr *ngFor="let vehiculo of vehiculos">
+        <td>{{ vehiculo.idVehiculo }}</td>
+        <td>{{ vehiculo.tipoVehiculo }}</td>
+        <td>{{ vehiculo.peso }} kg</td>
+        <td>{{ vehiculo.marca }}</td>
+        <td>{{ vehiculo.placa }}</td>
+        <td>{{ vehiculo.estado ? 'Disponible' : 'No disponible' }}</td>
+        <td>
+          <button (click)="seleccionarVehiculo(vehiculo.idVehiculo)" class="p-button p-button-danger">Eliminar</button>
+        </td>
+        <td>
+          <button pButton label="Actualizar" 
+          (click)="goToUpdateForm(vehiculo.idVehiculo)" 
+          class="p-button p-button-danger">acatualizar</button>
+        </td>
+      </tr>
     </tbody>
   </table>
+  <div *ngIf="mostrarModal" class="modal">
+    <div class="modal-content">
+      <h3>Confirmar eliminación</h3>
+      <p>¿Estás seguro de que deseas eliminar el vehículo?</p>
+      <div class="modal-actions">
+        <button (click)="eliminarVehiculo()" class="p-button p-button-danger">Sí, eliminar</button>
+        <button (click)="cerrarModal()" class="p-button">Cancelar</button>
+      </div>
+    </div>
+  </div>
 </div>

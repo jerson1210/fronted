@@ -18,7 +18,7 @@ export const routes: Routes = [
     },
 
     {
-        path:"vehiculos-form/:id",
+        path:"vehiculos-form",
         component:VehiculosFormComponent,
         title:"Formulario Vehiculos"
     },
@@ -27,6 +27,7 @@ export const routes: Routes = [
         component:PaqueteComponent,
         title:"Formulario Vehiculos"
     },
+    { path: 'vehiculos-form/:idVehiculo', component: VehiculosFormComponent } ,
     {
         path:"paquete-form/:id",
         component:PaqueteFormComponent,
