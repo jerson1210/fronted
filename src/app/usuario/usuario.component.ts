@@ -76,4 +76,12 @@ export class UsuarioComponent {
       this.messageService.add({ severity: 'warn', summary: 'Advertencia', detail: 'Debe seleccionar un rol primero.' });
     }
   }
+
+  // Método para regresar a la selección de roles
+goBackToRoleSelection(): void {
+  this.isUserRoleSelected = false;
+  this.roleSelected = null;  // Resetear el rol seleccionado
+  this.loginForm.reset();  // Resetear el formulario
+}
+
 }

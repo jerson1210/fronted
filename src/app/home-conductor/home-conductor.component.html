@@ -1,1 +1,36 @@
-<p>home-conductor works!</p>
+<div class="buttons-container">
+    <!-- Botón para mostrar la ruta -->
+    <button (click)="toggleRuta()" class="btn">Mostrar Ruta</button>
+    
+    <!-- Botón para mostrar información del vehículo -->
+    <button (click)="toggleVehiculo()" class="btn">Mostrar Vehículo</button>
+
+    <div *ngFor="let asignacion of asignaciones" class="asignacion-item">
+        <div class="info-item">
+            <strong>Ruta ID:</strong> {{ asignacion.idAsignarRuta }}
+            <button (click)="eliminarAsignacion(asignacion.idAsignarRuta)" class="btn eliminar">
+                Eliminar
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Se muestra el mapa solo si 'mostrarRuta' es verdadero -->
+<div *ngIf="mostrarRuta" id="mapContainer" #mapContainer class="map-container">
+    <!-- El mapa se renderiza aquí -->
+</div>
+
+<!-- Se muestra la información del vehículo solo si 'mostrarVehiculo' es verdadero -->
+<div *ngIf="mostrarVehiculo" class="vehicle-info">
+    <h2>Información del Vehículo:</h2>
+    <div class="info-card">
+        <div class="info-item"><strong>Peso:</strong> {{ vehiculo.peso }}</div>
+        <div class="info-item"><strong>Placa:</strong> {{ vehiculo.placa }}</div>
+        <div class="info-item"><strong>Estado:</strong> {{ vehiculo.estado }}</div>
+        <div class="info-item"><strong>Marca:</strong> {{ vehiculo.marca }}</div>
+        <div class="info-item"><strong>Tipo:</strong> {{ vehiculo.tipoVehiculo }}</div>
+        <!-- Agrega más campos según sea necesario -->
+    </div>
+</div>
