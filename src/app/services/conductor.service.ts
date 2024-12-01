@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { conductor } from '../models/conductor';
+import { loginRequest } from '../models/loginRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -35,4 +36,9 @@ export class ConductorService {
   deleteConductor(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/eliminar/${id}`);
   }
+
+  validarConductor(loginRequestt: loginRequest): Observable<conductor> {
+    return this.http.post<conductor>(`${this.apiUrl}/login`, loginRequestt);
+  }
+
 }

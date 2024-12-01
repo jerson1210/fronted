@@ -18,13 +18,9 @@ export class UsuarioService {
   }
 
   obtenerUsuario(): usuario | null {
-    // Devuelve el usuario almacenado en el localStorage
     const usuario = localStorage.getItem('usuario');
     return usuario ? JSON.parse(usuario) : null;
   }
- // getUsuario():Observable<usuario[]>{
-   // return this.http.get<usuario[]>(this.apiUrl)
-  //}
 
   getUsuarioId(id: number): Observable<usuario> {
     return this.http.get<usuario>(`${this.apiUrl}/listar/${id}`);

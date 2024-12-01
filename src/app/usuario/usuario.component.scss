@@ -105,3 +105,38 @@
     color: white;
   }
   
+
+  /* Estilos para los botones "Ingresar como Conductor" e "Ingresar como Administrador" */
+.login-card button {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Estilo para el botón "Ingresar como Conductor" */
+.login-card button:first-child {
+  background: #4CAF50; /* Color verde */
+  color: white;
+}
+
+.login-card button:first-child:hover {
+  background: #45a049; /* Hover verde oscuro */
+  transform: translateY(-2px);
+}
+
+/* Estilo para el botón "Ingresar como Administrador" */
+.login-card button:last-child {
+  background: #007bff; /* Color azul */
+  color: white;
+}
+
+.login-card button:last-child:hover {
+  background: #0056b3; /* Hover azul oscuro */
+  transform: translateY(-2px);
+}

@@ -16,7 +16,15 @@
         Don't have an account?
         <a href="/usuario-form/new" class="sign-up-link">Sign Up</a>
       </p>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Botones de selección -->
+      <div *ngIf="!isUserRoleSelected">
+        <button (click)="selectRole('conductor')">Ingresar como Conductor</button>
+        <button (click)="selectRole('administrador')">Ingresar como Administrador</button>
+      </div>
+      
+      <!-- Formulario de Login -->
+      <form *ngIf="isUserRoleSelected" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <input
             type="text"
@@ -24,7 +32,6 @@
             formControlName="nombre"
             class="form-control"
           />
-          <!-- Muestra el error si el nombre no es válido -->
           <small *ngIf="loginForm.get('nombre')?.invalid && loginForm.get('nombre')?.touched">
             Por favor, ingresa un nombre válido (solo letras).
           </small>
@@ -32,11 +39,10 @@
         <div class="form-group">
           <input
             type="password"
-            placeholder="contrasena"
+            placeholder="Contraseña"
             formControlName="contrasena"
             class="form-control"
           />
-          <!-- Muestra el error si la contraseña no cumple con los requisitos -->
           <small *ngIf="loginForm.get('contrasena')?.invalid && loginForm.get('contrasena')?.touched">
             La contraseña debe tener al menos 6 caracteres.
           </small>
@@ -45,11 +51,15 @@
           Iniciar Sesión
         </button>
       </form>
-      
 
       <!-- Mensaje de error general -->
       <p *ngIf="errorMessage" style="color: red; margin-top: 10px;">
         {{ errorMessage }}
+      </p>
+
+      <!-- Comentario si ingresa como conductor -->
+      <p *ngIf="roleSelected === 'conductor'" style="color: blue; margin-top: 10px;">
+        Lógica para ingresar como conductor (aún no implementada).
       </p>
 
       <!-- Sección para iniciar sesión con redes sociales -->

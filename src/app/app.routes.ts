@@ -7,6 +7,7 @@ import { ConductorComponent } from './conductor/conductor.component';
 import { ConductorFormComponent } from './conductor-form/conductor-form.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
+import { HomeConductorComponent } from './home-conductor/home-conductor.component';
 
 
 export const routes: Routes = [
@@ -49,9 +50,9 @@ export const routes: Routes = [
         title:"Formulario Vehiculos"
     },
     {
-        path:"usuario-form/:id",
-        component:UsuarioFormComponent,
-        title:"Formulario Vehiculos"
+        path:"home-conductor",
+        component:HomeConductorComponent,
+        title:"homeConductor"
     },
     {
         path:"**",
