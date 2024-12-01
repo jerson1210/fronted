@@ -1,8 +1,10 @@
 import { usuario } from './usuario';  
 
 export interface ruta {
-  idRuta: number;   
+  
   overviewPolyline: string;    
   coordenadas: string[];       
-  usuario: usuario; 
+  usuario: {
+    idUsuario: number; // Relación con el usuario, solo es necesario el ID
+  };
 }

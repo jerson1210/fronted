@@ -1,1 +1,75 @@
-<p>ruta works!</p>
+<div class="container">
+    <div class="header">
+      <h2 class="title">Ruta</h2>
+  
+    </div>
+    <div class="dashboard">
+      <div class="card">
+        <h3>
+          <a routerLink="/paquete">Paquetes</a>
+        </h3>
+      </div>
+      <div class="card">
+        <h3>
+          <a routerLink="/ruta">Rutas</a>
+        </h3>
+      </div>
+      <div class="card">
+        <h3>
+          <a routerLink="/asignarRuta">Asignar Ruta</a>
+        </h3>
+      </div>
+      <div class="card">
+        <h3>
+          <a routerLink="/">Vehículos</a>
+        </h3>
+      </div>
+      <div class="card">
+        <h3>
+          <a routerLink="/conductor">Conductores</a>
+        </h3>
+      </div>
+    </div>
+  
+    <div class="actions">
+      <a [routerLink]="'/ruta-form'" class="p-button font-bold">Crear</a>
+  
+    </div>
+  
+    <!-- Tabla de vehículos -->
+    <div *ngIf="ruta.length === 0" class="no-vehiculos-message">
+      <p>No se encontraron vehículos registrados para este usuario.</p>
+    </div>
+    <table *ngIf="ruta.length > 0" class="styled-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+     
+          <th>Acciones</th>  <!-- Columna para las acciones de eliminar -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ruta of ruta">
+          <td>{{ ruta.idRuta }}</td>
+          <td>{{ ruta.coordenadas }}</td>
+  
+          <td>
+            <button (click)="seleccionarRuta(ruta.idRuta)" class="p-button p-button-danger">Eliminar</button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="mostrarModal" class="modal">
+      <div class="modal-content">
+        <h3>Confirmar eliminación</h3>
+        <p>¿Estás seguro de que deseas eliminar el vehículo?</p>
+        <div class="modal-actions">
+          <button (click)="eliminarRuta()" class="p-button p-button-danger">Sí, eliminar</button>
+          <button (click)="cerrarModal()" class="p-button">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

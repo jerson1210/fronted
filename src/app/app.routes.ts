@@ -10,6 +10,7 @@ import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
 import { HomeConductorComponent } from './home-conductor/home-conductor.component';
 import { AsignarRutaComponent } from './asignar-ruta/asignar-ruta.component';
 import { RutaComponent } from './ruta/ruta.component';
+import { RutaFormComponent } from './ruta-form/ruta-form.component';
 
 
 export const routes: Routes = [
@@ -31,7 +32,7 @@ export const routes: Routes = [
     },
     {
         path:"ruta-form",
-        component:RutaComponent,
+        component:RutaFormComponent,
         title:"pagina Inicio"
     },
     {
