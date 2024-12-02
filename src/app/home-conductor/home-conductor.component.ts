@@ -1,5 +1,6 @@
 /// <reference types="google.maps" />
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, NgZone } from '@angular/core';
+import { Router } from '@angular/router'; // Importa el Router
 import { AsignarRutaService } from '../services/asignar-ruta.service';
 import { asignarRutaDto } from '../models/asignarRutaDto';
 import { CommonModule } from '@angular/common';
@@ -20,7 +21,8 @@ export class HomeConductorComponent implements OnInit, AfterViewInit {
 
   constructor(
     private asignarRutaService: AsignarRutaService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private router: Router // Inyecta el Router
   ) {}
 
   ngOnInit(): void {
@@ -48,8 +50,6 @@ export class HomeConductorComponent implements OnInit, AfterViewInit {
     }
   }
   
-  
-
   obtenerAsignaciones(): void {
     // Obtener el id del conductor desde el localStorage
     const conductorData = JSON.parse(localStorage.getItem('conductor') || '{}');
@@ -140,5 +140,10 @@ export class HomeConductorComponent implements OnInit, AfterViewInit {
         });
       });
     }
+  }
+
+  // Método para redirigir al usuario a la página /usuario
+  regresar(): void {
+    this.router.navigate(['/usuario']); // Redirige al usuario a /usuario
   }
 }

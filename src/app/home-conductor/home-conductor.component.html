@@ -7,15 +7,15 @@
 
     <div *ngFor="let asignacion of asignaciones" class="asignacion-item">
         <div class="info-item">
-            <strong>Ruta ID:</strong> {{ asignacion.idAsignarRuta }}
             <button (click)="eliminarAsignacion(asignacion.idAsignarRuta)" class="btn eliminar">
                 Eliminar
             </button>
         </div>
     </div>
+
+    <!-- Botón para regresar -->
+    <button (click)="regresar()" class="btn regresar">Regresar</button>
 </div>
-
-
 
 <!-- Se muestra el mapa solo si 'mostrarRuta' es verdadero -->
 <div *ngIf="mostrarRuta" id="mapContainer" #mapContainer class="map-container">
@@ -34,3 +34,4 @@
         <!-- Agrega más campos según sea necesario -->
     </div>
 </div>
+

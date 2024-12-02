@@ -22,6 +22,10 @@ export class AsignarRutaService {
     return this.http.get<asignarRutaDto[]>(`${this.apiUrl}/listar/${id}`);
   }
 
+  listarAsignarRutaUsuario(id: number): Observable<asignarRutaTotal[]> {
+    return this.http.get<asignarRutaTotal[]>(`${this.apiUrl}/listarUsuario/${id}`);
+  }
+
   crearAsignacion(asignarRuta: asignarRuta): Observable<asignarRuta> {
     return this.http.post<asignarRuta>(`${this.apiUrl}/crear`, asignarRuta);
   }

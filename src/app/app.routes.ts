@@ -17,9 +17,9 @@ import { AsignarRutaFormComponent } from './asignar-ruta-form/asignar-ruta-form.
 export const routes: Routes = [
 
     {
-        path:"",
-        component:HomeComponent,
-        title:"pagina Inicio"
+        path: '',
+        redirectTo: '/usuario',  
+        pathMatch: 'full',
     },
     {
         path:"asignarRuta",
@@ -78,6 +78,16 @@ export const routes: Routes = [
         path:"home-conductor",
         component:HomeConductorComponent,
         title:"homeConductor"
+    },
+    {
+        path:"home",
+        component:HomeComponent,
+        title:"home"
+    },
+    {
+        path:"vehiculo",
+        component:HomeComponent,
+        title:"vehiculo"
     },
     {
         path:"**",

@@ -55,7 +55,7 @@ export class UsuarioComponent {
         next: (usuario) => {
           localStorage.setItem('usuario', JSON.stringify(usuario));
           this.messageService.add({ severity: 'success', summary: 'Bienvenido', detail: 'Inicio de sesión exitoso' });
-          this.navrouter.navigateByUrl('');  
+          this.navrouter.navigateByUrl('/home');  
         },
         error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Usuario o contraseña incorrectos' });

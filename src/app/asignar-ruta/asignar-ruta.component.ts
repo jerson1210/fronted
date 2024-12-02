@@ -39,17 +39,21 @@ export class AsignarRutaComponent {
     }
   }
 
+
   ListarAsignarRuta(): void {
-    this.asignarRutaService.listarRutaAsignada().subscribe({
+    const idUsuario = 1;  // ID manual
+  
+    this.asignarRutaService.listarAsignarRutaUsuario(idUsuario).subscribe({
       next: (asignarRuta) => {
-        this.asignarRuta = asignarRuta;
-        this.renderizarAsignada();
+        this.asignarRuta = asignarRuta;  // Asigna la respuesta
+        this.renderizarAsignada();       // Llama a la función de renderizado
       },
       error: (error) => {
-        console.error('Error al obtener los vehículos:', error);
+        console.error('Error al obtener las rutas asignadas:', error);
       }
     });
   }
+  
 
   renderizarAsignada(): void {
     const tabla = document.getElementById('tabla-ruta');
@@ -101,7 +105,5 @@ export class AsignarRutaComponent {
     }
   }
   
-
-
 }
 
