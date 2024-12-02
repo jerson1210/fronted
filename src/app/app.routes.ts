@@ -12,6 +12,7 @@ import { AsignarRutaComponent } from './asignar-ruta/asignar-ruta.component';
 import { RutaComponent } from './ruta/ruta.component';
 import { RutaFormComponent } from './ruta-form/ruta-form.component';
 import { AsignarRutaFormComponent } from './asignar-ruta-form/asignar-ruta-form.component';
+import { AcercaDeComponent } from './acerca/acerca.component';
 
 
 export const routes: Routes = [
@@ -88,6 +89,16 @@ export const routes: Routes = [
         path:"vehiculo",
         component:HomeComponent,
         title:"vehiculo"
+    },
+    {
+        path:"acerca",
+        component:AcercaDeComponent,
+        title:"acerca"
+    },
+    {
+        path: 'usuario-form/new',
+        component: UsuarioFormComponent, // Ajusta este componente si no es correcto
+        title: 'Formulario de Registro'
     },
     {
         path:"**",

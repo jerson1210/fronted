@@ -1,0 +1,84 @@
+<div class="container">
+  <!-- Menú lateral -->
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo">
+    </div>
+    <ul class="menu">
+      <li><a routerLink="/vehiculo"><i class="icon-vehiculo"></i> Vehículo</a></li>
+      <li><a routerLink="/paquete"><i class="icon-paquete"></i> Paquete</a></li>
+      <li><a routerLink="/ruta"><i class="icon-ruta"></i> Ruta</a></li>
+      <li><a routerLink="/conductor"><i class="icon-conductor"></i> Conductor</a></li>
+      <li><a routerLink="/asignarRuta"><i class="icon-asignarRuta"></i> Asignar Ruta</a></li>
+      <li><a routerLink="/acerca"><i class="icon-info"></i> Acerca de RouteFlex</a></li> <!-- Nuevo enlace -->
+    </ul>
+  </aside>
+
+  <!-- Contenido principal -->
+  <main class="content">
+    <!-- Header con usuario -->
+    <header class="header">
+      <div class="user-info">
+        <ng-container *ngIf="usuarioId; else notLoggedIn">
+          <span>{{ usuarioNombre }}</span>
+          <button (click)="cerrarSesion()" class="logout-button">Cerrar sesión</button>
+        </ng-container>
+        <ng-template #notLoggedIn>
+          <a routerLink="/usuario" class="login-link">Iniciar sesión</a>
+        </ng-template>
+      </div>
+    </header>
+
+    <!-- Sección de Acerca de RouteFlex -->
+    <section class="about-section">
+      <h2>Acerca de RouteFlex</h2>
+      <p>
+        <strong>RouteFlex</strong> es una plataforma web diseñada para optimizar la gestión logística de entregas prioritarias, proporcionando herramientas eficientes tanto para administradores como para conductores. Este sistema innovador facilita la gestión de vehículos, paquetes y rutas, garantizando una operación organizada y eficiente en cada entrega.
+      </p>
+
+      <h3>Funcionalidades Principales</h3>
+
+      <h4>Gestión de Inventario de Vehículos</h4>
+      <p>
+        Los administradores pueden registrar y gestionar un inventario de vehículos, especificando detalles como capacidad de carga, disponibilidad y características técnicas. Esto permite asignar el vehículo más adecuado según las necesidades de cada paquete y ruta.
+      </p>
+
+      <h4>Gestión de Paquetes</h4>
+      <p>
+        Se pueden registrar paquetes con información clave como peso. Cada paquete se vincula a direcciones de entrega específicas, facilitando la gestión de múltiples destinos en una sola operación.
+      </p>
+
+      <h4>Integración con Google Maps</h4>
+      <p>
+        La plataforma utiliza la API de Google Maps para calcular rutas optimizadas, considerando la distancia y el tiempo de viaje. Esto asegura recorridos más rápidos y eficientes.
+      </p>
+
+      <h4>Asignación de Vehículos y Conductores</h4>
+      <p>
+        Los administradores pueden asignar vehículos y conductores a cada ruta, teniendo en cuenta la disponibilidad y capacidad de los recursos. Esta función garantiza una gestión efectiva de las entregas.
+      </p>
+
+      <h4>Visualización de Rutas Interactivas</h4>
+      <p>
+        Los conductores pueden acceder a mapas interactivos con sus rutas asignadas, puntos de entrega y direcciones precisas. Las rutas calculadas optimizan los tiempos de desplazamiento y el orden de las paradas.
+      </p>
+
+      <h4>Acceso Multiusuario</h4>
+      <p>
+        La plataforma distingue entre dos tipos de usuarios:
+      </p>
+      <ul>
+        <li><strong>Administrativos:</strong> Gestionan vehículos, paquetes y conductores, asignando rutas y supervisando el progreso de las entregas.</li>
+        <li><strong>Conductores:</strong> Acceden para visualizar sus rutas asignadas y gestionar las entregas de manera eficiente.</li>
+      </ul>
+
+      <h3>Autores</h3>
+      <p>
+        Desarrollado por <strong>Jhon Jairo Almanzar Quintero</strong> y <strong>Jerson Steven Mantilla</strong>, estudiantes de la Universidad Industrial de Santander.
+      </p>
+
+      <h3>Fecha de Desarrollo</h3>
+      <p>Noviembre 2024</p>
+    </section>
+  </main>
+</div>

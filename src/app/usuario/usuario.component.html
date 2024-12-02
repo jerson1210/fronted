@@ -21,7 +21,9 @@
     <div *ngIf="!isUserRoleSelected">
       <button (click)="selectRole('conductor')">Ingresar como Conductor</button>
       <button (click)="selectRole('administrador')">Ingresar como Administrador</button>
+      <button (click)="loginAsAdmin()" class="btn-test">Ingreso Gratuito</button> <!-- Botón de prueba -->
     </div>
+    
     
     <!-- Formulario de Login -->
     <form *ngIf="isUserRoleSelected" [formGroup]="loginForm" (ngSubmit)="onSubmit()">

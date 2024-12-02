@@ -3,6 +3,7 @@ import { asignarRutaTotal } from '../models/asignarRutaTotal';
 import { AsignarRutaService } from '../services/asignar-ruta.service';
 import { Router,RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-asignar-ruta',
@@ -17,7 +18,7 @@ export class AsignarRutaComponent {
   usuarioNombre?:String
 
   mostrarModal = false;
-  constructor(private asignarRutaService: AsignarRutaService,private router: Router) {}
+  constructor(private asignarRutaService: AsignarRutaService,private router: Router, private messageService: MessageService ) {}
 
   ngOnInit(): void {
     this.obtenerUsuarioLogueado();
@@ -41,9 +42,23 @@ export class AsignarRutaComponent {
 
 
   ListarAsignarRuta(): void {
-    const idUsuario = 1;  // ID manual
+
+    // Obtener el usuario desde localStorage
+    const usuario = localStorage.getItem('usuario');
+    if (!usuario) {
+      this.messageService.add({ severity: "error", summary: "Error", detail: "No se encontró usuario en el localStorage" });
+      return;
+    }
+
+    const usuarioData = JSON.parse(usuario);  // Ahora 'usuario' es de tipo 'string', no 'null'
+    const usuarioId = usuarioData ? usuarioData.idUsuario : null;
+
+    if (!usuarioId) {
+      this.messageService.add({ severity: "error", summary: "Error", detail: "Usuario no encontrado" });
+      return;
+    }
   
-    this.asignarRutaService.listarAsignarRutaUsuario(idUsuario).subscribe({
+    this.asignarRutaService.listarAsignarRutaUsuario(usuarioId).subscribe({
       next: (asignarRuta) => {
         this.asignarRuta = asignarRuta;  // Asigna la respuesta
         this.renderizarAsignada();       // Llama a la función de renderizado

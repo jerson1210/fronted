@@ -84,4 +84,20 @@ goBackToRoleSelection(): void {
   this.loginForm.reset();  // Resetear el formulario
 }
 
+// Método para iniciar sesión automáticamente como administrador
+loginAsAdmin(): void {
+  this.roleSelected = 'administrador'; // Selecciona el rol administrador
+  this.isUserRoleSelected = true; // Marca que ya se seleccionó el rol
+
+  // Configura los valores predeterminados del formulario
+  this.loginForm.setValue({
+    nombre: 'Demo',
+    contrasena: '123456'
+  });
+
+  // Simula el envío del formulario
+  this.onSubmit();
+}
+
+
 }

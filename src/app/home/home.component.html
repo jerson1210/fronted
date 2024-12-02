@@ -9,7 +9,8 @@
       <li><a routerLink="/paquete"><i class="icon-paquete"></i> Paquete</a></li>
       <li><a routerLink="/ruta"><i class="icon-ruta"></i> Ruta</a></li>
       <li><a routerLink="/conductor"><i class="icon-conductor"></i> Conductor</a></li>
-      <li><a routerLink="/asignarRuta"><i class="icon-conductor"></i> AsingarRuta</a></li>
+      <li><a routerLink="/asignarRuta"><i class="icon-conductor"></i> Asignar Ruta</a></li>
+      <li><a routerLink="/acerca"><i class="icon-info"></i> Acerca de RouteFlex</a></li> <!-- Nueva opción -->
     </ul>
   </aside>
 
@@ -30,7 +31,7 @@
 
     <!-- Acciones -->
     <section class="actions">
-      <h2 class="title">Vehiculo</h2>
+      <h2 class="title">Vehículo</h2>
       <div class="buttons">
         <a routerLink="/vehiculos-form" class="btn btn-create">Crear</a>
       </div>
@@ -47,7 +48,6 @@
             <th>Peso</th>
             <th>Estado</th>
             <th>Acciones</th>
-            
           </tr>
         </thead>
         <tbody>
@@ -63,17 +63,19 @@
               </button>
             </td>
             <td>
-              <button  (click)="goToUpdateForm (vehiculo.idVehiculo)" class="p-button p-button-danger">Actualizar</button>
+              <button (click)="goToUpdateForm(vehiculo.idVehiculo)" class="p-button p-button-warning">Actualizar</button>
             </td>
           </tr>
         </tbody>
       </table>
       <div *ngIf="vehiculos.length === 0" class="no-data">No hay vehículos registrados.</div>
     </section>
+
+    <!-- Modal de confirmación de eliminación -->
     <div *ngIf="mostrarModal" class="modal">
       <div class="modal-content">
         <h3>Confirmar eliminación</h3>
-        <p>¿Estás seguro de que deseas eliminar el paquete?</p>
+        <p>¿Estás seguro de que deseas eliminar el vehículo?</p>
         <div class="modal-actions">
           <button (click)="eliminarVehiculo()" class="p-button p-button-danger">Sí, eliminar</button>
           <button (click)="cerrarModal()" class="p-button">Cancelar</button>
