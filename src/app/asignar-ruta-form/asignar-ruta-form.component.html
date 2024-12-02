@@ -1,0 +1,106 @@
+<div class="container mt-4">
+    <h2>Asignar Ruta</h2>
+    
+    <!-- Formulario de asignación -->
+    <form (ngSubmit)="crearAsignarRuta()">
+      <!-- Selección de Ruta -->
+      <div class="form-group">
+        <label for="ruta">Seleccionar Ruta:</label>
+        <select
+          id="ruta"
+          class="form-control"
+          [(ngModel)]="rutaId"
+          name="rutaId"
+          required
+        >
+          <option *ngFor="let ruta of ruta" [value]="ruta.idRuta">
+            {{ ruta.idRuta }}
+          </option>
+        </select>
+      </div>
+  
+      <!-- Selección de Conductor -->
+      <div class="form-group">
+        <label for="conductor">Seleccionar Conductor:</label>
+        <select
+          id="conductor"
+          class="form-control"
+          [(ngModel)]="conductorNombre"
+          name="conductorNombre"
+          required
+        >
+          <option *ngFor="let conductor of conductor" [value]="conductor.nombre">
+            {{ conductor.nombre }}
+          </option>
+        </select>
+      </div>
+  
+      <!-- Selección de Vehículo -->
+      <div class="form-group">
+        <label for="vehiculo">Seleccionar Vehículo:</label>
+        <select
+          id="vehiculo"
+          class="form-control"
+          [(ngModel)]="vehiculoPlaca"
+          name="vehiculoPlaca"
+          required
+        >
+          <option *ngFor="let vehiculo of vehiculos" [value]="vehiculo.placa">
+            {{ vehiculo.placa }}
+          </option>
+        </select>
+      </div>
+  
+      <!-- Botón de Asignar -->
+      <button type="submit" class="btn btn-primary mt-3">
+        Asignar Ruta
+      </button>
+    </form>
+  
+    <!-- Tabla de conductores -->
+    <div class="mt-4">
+      <h3>Conductores Disponibles</h3>
+      <table class="table table-striped" id="tabla-conductor">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Contenido renderizado dinámicamente desde TypeScript -->
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Tabla de rutas -->
+    <div class="mt-4">
+      <h3>Rutas Disponibles</h3>
+      <table class="table table-striped" id="tabla-ruta">
+        <thead>
+          <tr>
+            <th>ID de Ruta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Contenido renderizado dinámicamente desde TypeScript -->
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Tabla de vehículos -->
+    <div class="mt-4">
+      <h3>Vehículos Disponibles</h3>
+      <table class="table table-striped" id="tabla-vehiculos">
+        <thead>
+          <tr>
+            <th>Placa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Contenido renderizado dinámicamente desde TypeScript -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  

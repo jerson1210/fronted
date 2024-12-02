@@ -11,6 +11,7 @@ import { HomeConductorComponent } from './home-conductor/home-conductor.componen
 import { AsignarRutaComponent } from './asignar-ruta/asignar-ruta.component';
 import { RutaComponent } from './ruta/ruta.component';
 import { RutaFormComponent } from './ruta-form/ruta-form.component';
+import { AsignarRutaFormComponent } from './asignar-ruta-form/asignar-ruta-form.component';
 
 
 export const routes: Routes = [
@@ -23,6 +24,11 @@ export const routes: Routes = [
     {
         path:"asignarRuta",
         component:AsignarRutaComponent,
+        title:"pagina Inicio"
+    },
+    {
+        path:"asignarRuta-form",
+        component:AsignarRutaFormComponent,
         title:"pagina Inicio"
     },
     {

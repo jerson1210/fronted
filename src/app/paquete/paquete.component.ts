@@ -1,29 +1,26 @@
 import { Component } from '@angular/core';
-
 import { PaqueteService } from '../services/paquete.service';
-
-import { ButtonModule } from 'primeng/button';
-
-import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
-import { RouterModule,Router } from '@angular/router';
-import { SidebarModule } from 'primeng/sidebar';
+import { Router, RouterModule } from '@angular/router';
 import { paqueteTotal } from '../models/paqueteTotal';
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-paquete',
-  imports: [TableModule,ButtonModule,CommonModule,RouterModule,SidebarModule],
   templateUrl: './paquete.component.html',
-  styleUrl: './paquete.component.scss'
+  styleUrls: ['./paquete.component.scss'],
+  imports: [RouterModule, CommonModule],
 })
 export class PaqueteComponent {
-  paqueteSeleccionado!:number;
-  paquete:paqueteTotal[]=[];
+  paqueteSeleccionado!: number;
+  paquete: paqueteTotal[] = [];
+  paquetesSeleccionados: number[] = [];
   usuarioId!: number;
+  usuarioNombre?:String;
 
   mostrarModal = false;
 
-  constructor(private paqueteService: PaqueteService,private router: Router) {}
+  constructor(private paqueteService: PaqueteService, private router: Router, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.obtenerUsuarioLogueado();
@@ -37,6 +34,7 @@ export class PaqueteComponent {
     if (usuario) {
       const usuarioData = JSON.parse(usuario);
       this.usuarioId = usuarioData.idUsuario;
+      this.usuarioNombre = usuarioData.nombre;
     }
   }
 
@@ -44,69 +42,128 @@ export class PaqueteComponent {
     this.paqueteService.listarPaquetePorUsuario(this.usuarioId).subscribe({
       next: (paquete) => {
         this.paquete = paquete;
-        this.renderizarPaquete();
       },
       error: (error) => {
-        console.error('Error al obtener los vehículos:', error);
-      }
+        console.error('Error al obtener los paquetes:', error);
+      },
     });
   }
+  cerrarSesion(): void {
+    localStorage.removeItem('usuario');
+    this.router.navigate(['/usuario']); // Redirigir al login
+  }
 
-  renderizarPaquete(): void {
-    const tabla = document.getElementById('tabla-paquete');
-    if (tabla) {
-      tabla.innerHTML = ''; // Limpia la tabla antes de renderizar
-      this.paquete.forEach((paquete) => {
-        const fila = `
-          <tr>
-            <td>${paquete.idPaqueteEnvio}</td>
-            <td>${paquete.nombre}</td>
-            <td>${paquete.numero} kg</td>
-            <td>${paquete.direccion}</td>
-            <td>${paquete.pesoPaquete}</td>
-            <td>${paquete.fecha}</td>
-          </tr>
-        `;
-        tabla.innerHTML += fila;
-      });
+
+  seleccionarPaquete(id: number, event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    if (isChecked) {
+      this.paquetesSeleccionados.push(id);
+    } else {
+      this.paquetesSeleccionados = this.paquetesSeleccionados.filter((paqueteId) => paqueteId !== id);
     }
   }
-  
-  seleccionarPaquete(id: number): void {
+
+  seleccionarTodos(event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    if (isChecked) {
+      this.paquetesSeleccionados = this.paquete.map((paquete) => paquete.idPaqueteEnvio);
+    } else {
+      this.paquetesSeleccionados = [];
+    }
+  }
+
+  seleccionarPaqueteParaEliminar(id: number): void {
     this.paqueteSeleccionado = id;
-    this.abrirModalEliminar();  // Muestra el modal de confirmación
-  }
-  abrirModalEliminar(): void {
-    this.mostrarModal = true;  // Muestra el modal
+    this.mostrarModal = true;
   }
 
-  // Cierra el modal sin realizar ninguna acción
-  cerrarModal(): void {
-    this.mostrarModal = false;  // Cierra el modal
-  }
-
-  // Confirma la eliminación
   eliminarPaquete(): void {
     if (this.paqueteSeleccionado) {
       this.paqueteService.deletePaquete(this.paqueteSeleccionado).subscribe({
         next: () => {
           alert('Paquete eliminado exitosamente');
-          this.listarPaquete(); // Actualiza la lista de vehículos
-          this.cerrarModal(); // Cierra el modal
+          this.listarPaquete();
+          this.mostrarModal = false;
         },
         error: (error) => {
-          console.error('Error al eliminar Paquete:', error);
-          alert('No se pudo eliminar el vehículo.');
-          this.cerrarModal(); // Cierra el modal
-        }
+          console.error('Error al eliminar paquete:', error);
+          alert('No se pudo eliminar el paquete.');
+          this.mostrarModal = false;
+        },
       });
     }
   }
-  
+
+  cerrarModal(): void {
+    this.mostrarModal = false;
+  }
+
   goToUpdateForm(idPaqueteEnvio: number): void {
-    // Redirige a la ruta del formulario de actualización
     this.router.navigate(['/paquete-form', idPaqueteEnvio]);
   }
 
+  crearRuta(): void {
+    // Crear un arreglo con los paquetes seleccionados en el formato esperado por el backend
+    const paquetesParaRuta = this.paquetesSeleccionados.map((id) => {
+      const paquete = this.paquete.find((p) => p.idPaqueteEnvio === id);
+      return {
+        usuario: { idUsuario: this.usuarioId }, // Asignamos el usuario logueado
+        nombre: paquete?.nombre,
+        numero: paquete?.numero,
+        pesoPaquete: paquete?.pesoPaquete,
+        fecha: paquete?.fecha,
+        idPaqueteEnvio: paquete?.idPaqueteEnvio,
+        direccion: paquete?.direccion,
+      };
+    });
+  
+    // Hacer la solicitud HTTP al backend para crear la ruta
+    this.http.post('http://localhost:8080/ruta/crear', paquetesParaRuta).subscribe({
+      next: (response) => {
+        console.log('Ruta creada con éxito:', response);
+        alert('Ruta creada con éxito');
+        this.router.navigate(['/ruta']); // Redirigir a la página de la ruta creada
+  
+        // Ahora eliminar los paquetes seleccionados
+        this.eliminarPaquetesSeleccionados();
+      },
+      error: (error) => {
+        console.error('Error al crear la ruta:', error);
+        alert('No se pudo crear la ruta.');
+      },
+    });
+  }
+  
+  eliminarPaquetesSeleccionados(): void {
+    // Verificar si hay paquetes seleccionados
+    if (this.paquetesSeleccionados.length > 0) {
+      for (const id of this.paquetesSeleccionados) {
+        // Llamada al servicio para eliminar cada paquete por su ID
+        this.paqueteService.deletePaquete(id).subscribe({
+          next: () => {
+            console.log(`Paquete con ID ${id} eliminado exitosamente`);
+            // Eliminar el paquete de la lista en el frontend
+            this.paquete = this.paquete.filter((paquete) => paquete.idPaqueteEnvio !== id);
+          },
+          error: (error) => {
+            console.error(`Error al eliminar el paquete con ID ${id}:`, error);
+            alert(`No se pudo eliminar el paquete con ID ${id}`);
+          },
+        });
+      }
+  
+      // Limpiar la selección de paquetes después de la eliminación
+      this.paquetesSeleccionados = [];
+    } else {
+      alert('No se han seleccionado paquetes para eliminar');
+    }
+  }
+  
 
+  // Método adicional para verificar si un paquete ya está seleccionado
+  esPaqueteSeleccionado(id: number): boolean {
+    return this.paquetesSeleccionados.includes(id);
+  }
 }
+
+

@@ -17,6 +17,9 @@
             <div class="field flex flex-column gap-1">
                 <label for="direccion">Direccion</label>
                 <input type="text" pInputText formControlName="direccion" />
+                <div *ngIf="formPaquete.get('direccion')?.hasError('direccionInvalida') && formPaquete.get('direccion')?.touched" class="tooltip-message">
+                    La dirección no tiene el formato correcto (Ej: Calle 36 17-27, Bucaramanga, Santander, Colombia).
+                  </div>
 
             </div>
             <div class="field flex flex-column gap-1">

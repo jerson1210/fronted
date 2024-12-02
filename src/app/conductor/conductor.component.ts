@@ -17,7 +17,7 @@ import { conductorTotal } from '../models/conductorTotal';
   styleUrl: './conductor.component.scss'
 })
 export class ConductorComponent implements OnInit {
-
+  usuarioNombre?:String;
   conductor:conductorTotal[]=[];
   usuarioId!: number;
   conductorSelccionado!: number;
@@ -38,7 +38,12 @@ export class ConductorComponent implements OnInit {
     if (usuario) {
       const usuarioData = JSON.parse(usuario);
       this.usuarioId = usuarioData.idUsuario;
+      this.usuarioNombre = usuarioData.nombre; 
     }
+  }
+  cerrarSesion(): void {
+    localStorage.removeItem('usuario');
+    this.router.navigate(['/usuario']); // Redirigir al login
   }
 
   listarConductores(): void {

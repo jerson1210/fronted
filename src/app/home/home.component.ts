@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   vehiculos: vehiculoTotal[] = [];
   usuarioId!: number;
+  usuarioNombre!:String;
   vehiculoSeleccionado!: number;
   
   mostrarModal = false;
@@ -32,6 +33,7 @@ export class HomeComponent implements OnInit {
     if (usuario) {
       const usuarioData = JSON.parse(usuario);
       this.usuarioId = usuarioData.idUsuario;
+      this.usuarioNombre = usuarioData.nombre; 
     }
   }
 
@@ -101,6 +103,11 @@ export class HomeComponent implements OnInit {
   goToUpdateForm(idVehiculo: number): void {
     // Redirige a la ruta del formulario de actualización
     this.router.navigate(['/vehiculos-form', idVehiculo]);
+  }
+  
+  cerrarSesion(): void {
+    localStorage.removeItem('usuario');
+    this.router.navigate(['/usuario']); // Redirigir al login
   }
 
 

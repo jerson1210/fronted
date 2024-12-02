@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators,ValidationErrors,AbstractControl} from '@angular/forms';
 import { PaqueteService } from '../services/paquete.service';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
@@ -9,14 +9,14 @@ import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
-
+import { CommonModule } from '@angular/common';
 
 import { CardModule } from 'primeng/card';
 import { paquete } from '../models/paquete';
 
 @Component({
   selector: 'app-paquete-form',
-  imports: [ReactiveFormsModule,FormsModule,ButtonModule,ToastModule,RouterModule,InputTextModule,InputNumberModule,CardModule,CalendarModule],
+  imports: [ReactiveFormsModule,CommonModule,FormsModule,ButtonModule,ToastModule,RouterModule,InputTextModule,InputNumberModule,CardModule,CalendarModule],
   templateUrl: './paquete-form.component.html',
   styleUrl: './paquete-form.component.scss'
 })
@@ -26,15 +26,24 @@ export class PaqueteFormComponent {
   edit:boolean=false;
 
   constructor(private fb:FormBuilder,private paqueteService:PaqueteService,private activatedRoute:ActivatedRoute,private messageService:MessageService,private router:Router){
+    
+    
     this.formPaquete = this.fb.group({
       idPaqueteEnvio: [null], // Asegúrate de que el id sea numérico
       nombre: ['', Validators.required], // Campo de texto con validación requerida
       numero: [null, [Validators.required, Validators.pattern('^[0-9]*$')]], // Número con validación requerida
-      direccion: ['', Validators.required], // Campo de texto con validación requerida
+      direccion: ['', Validators.required,this.direccionValidator], // Campo de texto con validación requerida
       pesoPaquete: [null, [Validators.required, Validators.pattern('^[0-9]*$')]], // Peso numérico
       fecha: ['', Validators.required] // Campo de texto para fecha con validación requerida
     });
 
+  }
+  direccionValidator(control: AbstractControl): ValidationErrors | null {
+    const direccionRegex = /^[a-zA-Z\s]+\s\d{1,4}(\s\d{1,4})?(,\s[a-zA-Z\s]+){2,3},\s[a-zA-Z\s]+$/;
+    if (control.value && !direccionRegex.test(control.value)) {
+      return { direccionInvalida: true };
+    }
+    return null;
   }
 
   ngOnInit(): void {
@@ -119,7 +128,7 @@ const fechaComoString = fechaSeleccionada instanceof Date
     this.paqueteService.actualizarPaquete(paqueteData).subscribe({
       next: () => {
         this.messageService.add({ severity: "success", summary: "Guardado", detail: "Vehículo actualizado" });
-        this.router.navigateByUrl("/vehiculos");
+        this.router.navigateByUrl("/paquete");
       },
       error: (err) => {
         console.error('Error al actualizar el vehículo', err);

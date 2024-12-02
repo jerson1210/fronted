@@ -1,1 +1,81 @@
-<p>asignar-ruta works!</p>
+<div class="container">
+  <!-- Menú lateral -->
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="ruta_del_logo.png" alt="Logo">
+    </div>
+    <ul class="menu">
+      <li><a routerLink="/"><i class="icon-vehiculo"></i> Vehículo</a></li>
+      <li><a routerLink="/paquete"><i class="icon-paquete"></i> Paquete</a></li>
+      <li><a routerLink="/ruta"><i class="icon-ruta"></i> Ruta</a></li>
+      <li><a routerLink="/conductor"><i class="icon-conductor"></i> Conductor</a></li>
+      <li><a routerLink="/asignarRuta"><i class="icon-conductor"></i> AsingarRuta</a></li>
+    </ul>
+  </aside>
+
+  <!-- Contenido principal -->
+  <main class="content">
+    <!-- Header con usuario -->
+    <header class="header">
+      <div class="user-info">
+        <ng-container *ngIf="usuarioId; else notLoggedIn">
+          <span>{{ usuarioNombre }}</span>
+          <button (click)="cerrarSesion()" class="logout-button">Cerrar sesión</button>
+        </ng-container>
+        <ng-template #notLoggedIn>
+          <a routerLink="/usuario" class="login-link">Iniciar sesión</a>
+        </ng-template>
+      </div>
+    </header>
+
+    <!-- Acciones -->
+    <section class="actions">
+      <h2 class="title">AsignarRuta</h2>
+      <div class="buttons">
+        <a routerLink="/vehiculos-form" class="btn btn-create">Crear</a>
+      </div>
+    </section>
+
+    <!-- Tabla -->
+    <section class="table-section">
+      <table *ngIf="asignarRuta.length > 0" class="styled-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Conductor</th>
+            <th>IdRuta</th>
+            <th>PlacaVehiculo</th>
+            <th>Acciones</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let asignarRuta of asignarRuta">
+            <td>{{ asignarRuta.idAsignarRuta }}</td>
+            <td>{{ asignarRuta.conductor.nombre}}</td>
+            <td>{{ asignarRuta.ruta.idRuta}}</td>
+            <td>{{ asignarRuta.vehiculo.placa}}</td>
+
+            <td>
+              <button (click)="seleccionarAsignar(asignarRuta.idAsignarRuta)" class="p-button p-button-danger">
+                Eliminar
+              </button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="asignarRuta.length === 0" class="no-data">No hay rutas registradas.</div>
+    </section>
+    <div *ngIf="mostrarModal" class="modal">
+      <div class="modal-content">
+        <h3>Confirmar eliminación</h3>
+        <p>¿Estás seguro de que deseas eliminar la ruta?</p>
+        <div class="modal-actions">
+          <button (click)="eliminarRuta()" class="p-button p-button-danger">Sí, eliminar</button>
+          <button (click)="cerrarModal()" class="p-button">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,84 +1,104 @@
 <div class="container">
-  <div class="header">
-    <h2 class="title">Paquete</h2>
+  <!-- Menú lateral -->
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="imagen/logo.png" alt="Logo">
+    </div>
+    <ul class="menu">
+      <li><a routerLink="/"><i class="icon-vehiculo"></i> Vehículo</a></li>
+      <li><a routerLink="/paquete"><i class="icon-paquete"></i> Paquete</a></li>
+      <li><a routerLink="/ruta"><i class="icon-ruta"></i> Ruta</a></li>
+      <li><a routerLink="/conductor"><i class="icon-conductor"></i> Conductor</a></li>
+      <li><a routerLink="/asignarRuta"><i class="icon-conductor"></i> AsingarRuta</a></li>
+    </ul>
+  </aside>
 
-  </div>
-  <div class="dashboard">
-    <div class="card">
-      <h3>
-        <a routerLink="/paquete">Paquetes</a>
-      </h3>
-    </div>
-    <div class="card">
-      <h3>
-        <a routerLink="/ruta">Rutas</a>
-      </h3>
-    </div>
-    <div class="card">
-      <h3>
-        <a routerLink="/asignarRuta">Asignar Ruta</a>
-      </h3>
-    </div>
-    <div class="card">
-      <h3>
-        <a routerLink="/">Vehículos</a>
-      </h3>
-    </div>
-    <div class="card">
-      <h3>
-        <a routerLink="/conductor">Conductores</a>
-      </h3>
-    </div>
+  <!-- Contenido principal -->
+  <main class="content">
+    <!-- Header con usuario -->
+    <header class="header">
+      <div class="user-info">
+        <ng-container *ngIf="usuarioId; else notLoggedIn">
+          <span>{{ usuarioNombre }}</span>
+          <button (click)="cerrarSesion()" class="logout-button">Cerrar sesión</button>
+        </ng-container>
+        <ng-template #notLoggedIn>
+          <a routerLink="/usuario" class="login-link">Iniciar sesión</a>
+        </ng-template>
+      </div>
+    </header>
+    <section class="actions">
+      <h2 class="title">Paquete</h2>
+      <div class="buttons">
+        <a routerLink="/paquete-form" class="btn btn-create">Crear</a>
+
+      </div>
+      
+    </section>
+      <!-- Botón para crear ruta -->
+  <div *ngIf="paquetesSeleccionados.length > 0" class="buttons">
+    <button (click)="crearRuta()" class="btn btn-create">Crear Ruta</button>
   </div>
 
-  <div class="actions">
-    <a [routerLink]="'/paquete-form'" class="p-button font-bold">Crear</a>
+    <!-- Checkbox para seleccionar todos -->
 
-  </div>
 
-  <!-- Tabla de vehículos -->
-  <div *ngIf="paquete.length === 0" class="no-vehiculos-message">
-    <p>No se encontraron vehículos registrados para este usuario.</p>
-  </div>
-  <table *ngIf="paquete.length > 0" class="styled-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Numero</th>
-        <th>Direccion</th>
-        <th>PesoPaquete</th>
-        <th>Fecha</th>
-        <th>Acciones</th>  <!-- Columna para las acciones de eliminar -->
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let paquete of paquete">
-        <td>{{ paquete.idPaqueteEnvio }}</td>
-        <td>{{ paquete.nombre }}</td>
-        <td>{{ paquete.numero }} </td>
-        <td>{{ paquete.direccion }}</td>
-        <td>{{ paquete.pesoPaquete }}kg</td>
-        <td>{{ paquete.fecha  }}</td>
-        <td>
-          <button (click)="seleccionarPaquete(paquete.idPaqueteEnvio)" class="p-button p-button-danger">Eliminar</button>
-        </td>
-        <td>
-          <button pButton label="Actualizar" 
-          (click)="goToUpdateForm(paquete.idPaqueteEnvio)" 
-          class="">actualizar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <table *ngIf="paquete.length > 0" class="styled-table">
+      <thead>
+        <tr>
+          <th>Seleccionar</th>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Numero</th>
+          <th>Direccion</th>
+          <th>PesoPaquete</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let paquete of paquete">
+          <!-- Checkbox para seleccionar un paquete -->
+          <td>
+            <input
+              type="checkbox"
+              [checked]="esPaqueteSeleccionado(paquete.idPaqueteEnvio)"
+              (change)="seleccionarPaquete(paquete.idPaqueteEnvio, $event)"
+            />
+          </td>
+          <td>{{ paquete.idPaqueteEnvio }}</td>
+          <td>{{ paquete.nombre }}</td>
+          <td>{{ paquete.numero }}</td>
+          <td>{{ paquete.direccion }}</td>
+          <td>{{ paquete.pesoPaquete }}</td>
+          <td>{{ paquete.fecha }}</td>
+          <td>
+            <button (click)="seleccionarPaqueteParaEliminar(paquete.idPaqueteEnvio)" class="p-button p-button-danger">
+              Eliminar
+            </button>
+            <td>
+              <button (click)="goToUpdateForm(paquete.idPaqueteEnvio)" class="p-button p-button-danger">
+                Actualizar
+              </button>
+            </td>
+          
+        </tr>
+      </tbody>seleccionarPaquete
+    </table>
+    <div *ngIf="paquete.length === 0" class="no-data">No hay paquetes registrados.</div>
+  
+
+
+
+  <!-- Modal para confirmación de eliminación -->
   <div *ngIf="mostrarModal" class="modal">
     <div class="modal-content">
       <h3>Confirmar eliminación</h3>
-      <p>¿Estás seguro de que deseas eliminar el vehículo?</p>
+      <p>¿Estás seguro de que deseas eliminar este paquete?</p>
       <div class="modal-actions">
         <button (click)="eliminarPaquete()" class="p-button p-button-danger">Sí, eliminar</button>
         <button (click)="cerrarModal()" class="p-button">Cancelar</button>
       </div>
     </div>
   </div>
-</div>
+

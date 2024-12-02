@@ -21,6 +21,7 @@ export class RutaComponent {
   rutaSeleccionada!:number;
   ruta:rutaTotal[]=[];
   usuarioId!: number;
+  usuarioNombre?:String;
 
   mostrarModal = false;
   constructor(private rutaService: RutaService,private router: Router) {}
@@ -37,7 +38,12 @@ export class RutaComponent {
     if (usuario) {
       const usuarioData = JSON.parse(usuario);
       this.usuarioId = usuarioData.idUsuario;
+      this.usuarioNombre = usuarioData.nombre; 
     }
+  }
+  cerrarSesion(): void {
+    localStorage.removeItem('usuario');
+    this.router.navigate(['/usuario']); // Redirigir al login
   }
 
   ListarRuta(): void {
@@ -100,10 +106,7 @@ export class RutaComponent {
     }
   }
   
-  goToUpdateForm(idPaqueteEnvio: number): void {
-    // Redirige a la ruta del formulario de actualización
-    this.router.navigate(['/paquete-form', idPaqueteEnvio]);
-  }
+
 
 
 }

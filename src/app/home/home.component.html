@@ -1,84 +1,85 @@
 <div class="container">
-  <div class="header">
-    <h2 class="title">Vehículos</h2>
+  <!-- Menú lateral -->
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo">
+    </div>
+    <ul class="menu">
+      <li><a routerLink="/vehiculo"><i class="icon-vehiculo"></i> Vehículo</a></li>
+      <li><a routerLink="/paquete"><i class="icon-paquete"></i> Paquete</a></li>
+      <li><a routerLink="/ruta"><i class="icon-ruta"></i> Ruta</a></li>
+      <li><a routerLink="/conductor"><i class="icon-conductor"></i> Conductor</a></li>
+      <li><a routerLink="/asignarRuta"><i class="icon-conductor"></i> AsingarRuta</a></li>
+    </ul>
+  </aside>
 
-  </div>
-  <div class="dashboard">
-    <div class="card">
-      <h3>
-        <a routerLink="/paquete">Paquetes</a>
-      </h3>
-    </div>
-    <div class="card">
-      <h3>
-        <a routerLink="/ruta">Rutas</a>
-      </h3>
-    </div>
-    <div class="card">
-      <h3>
-        <a routerLink="/asignarRuta">Asignar Ruta</a>
-      </h3>
-    </div>
-    <div class="card">
-      <h3>
-        <a routerLink="/">Vehículos</a>
-      </h3>
-    </div>
-    <div class="card">
-      <h3>
-        <a routerLink="/conductor">Conductores</a>
-      </h3>
-    </div>
-  </div>
+  <!-- Contenido principal -->
+  <main class="content">
+    <!-- Header con usuario -->
+    <header class="header">
+      <div class="user-info">
+        <ng-container *ngIf="usuarioId; else notLoggedIn">
+          <span>{{ usuarioNombre }}</span>
+          <button (click)="cerrarSesion()" class="logout-button">Cerrar sesión</button>
+        </ng-container>
+        <ng-template #notLoggedIn>
+          <a routerLink="/usuario" class="login-link">Iniciar sesión</a>
+        </ng-template>
+      </div>
+    </header>
 
-  <div class="actions">
-    <a [routerLink]="'/vehiculos-form'" class="p-button font-bold">Crear</a>
+    <!-- Acciones -->
+    <section class="actions">
+      <h2 class="title">Vehiculo</h2>
+      <div class="buttons">
+        <a routerLink="/vehiculos-form" class="btn btn-create">Crear</a>
+      </div>
+    </section>
 
-  </div>
-
-  <!-- Tabla de vehículos -->
-  <div *ngIf="vehiculos.length === 0" class="no-vehiculos-message">
-    <p>No se encontraron vehículos registrados para este usuario.</p>
-  </div>
-  <table *ngIf="vehiculos.length > 0" class="styled-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Tipo</th>
-        <th>Peso</th>
-        <th>Marca</th>
-        <th>Placa</th>
-        <th>Estado</th>
-        <th>Acciones</th>  <!-- Columna para las acciones de eliminar -->
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let vehiculo of vehiculos">
-        <td>{{ vehiculo.idVehiculo }}</td>
-        <td>{{ vehiculo.tipoVehiculo }}</td>
-        <td>{{ vehiculo.peso }} kg</td>
-        <td>{{ vehiculo.marca }}</td>
-        <td>{{ vehiculo.placa }}</td>
-        <td>{{ vehiculo.estado ? 'Disponible' : 'No disponible' }}</td>
-        <td>
-          <button (click)="seleccionarVehiculo(vehiculo.idVehiculo)" class="p-button p-button-danger">Eliminar</button>
-        </td>
-        <td>
-          <button pButton label="" 
-          (click)="goToUpdateForm(vehiculo.idVehiculo)" 
-          >actualizar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div *ngIf="mostrarModal" class="modal">
-    <div class="modal-content">
-      <h3>Confirmar eliminación</h3>
-      <p>¿Estás seguro de que deseas eliminar el vehículo?</p>
-      <div class="modal-actions">
-        <button (click)="eliminarVehiculo()" class="p-button p-button-danger">Sí, eliminar</button>
-        <button (click)="cerrarModal()" class="p-button">Cancelar</button>
+    <!-- Tabla -->
+    <section class="table-section">
+      <table *ngIf="vehiculos.length > 0" class="styled-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Placa</th>
+            <th>Tipo</th>
+            <th>Peso</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let vehiculo of vehiculos">
+            <td>{{ vehiculo.idVehiculo }}</td>
+            <td>{{ vehiculo.placa }}</td>
+            <td>{{ vehiculo.tipoVehiculo }}</td>
+            <td>{{ vehiculo.peso }} kg</td>
+            <td>{{ vehiculo.estado ? 'Disponible' : 'No disponible' }}</td>
+            <td>
+              <button (click)="seleccionarVehiculo(vehiculo.idVehiculo)" class="p-button p-button-danger">
+                Eliminar
+              </button>
+            </td>
+            <td>
+              <button  (click)="goToUpdateForm (vehiculo.idVehiculo)" class="p-button p-button-danger">Actualizar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="vehiculos.length === 0" class="no-data">No hay vehículos registrados.</div>
+    </section>
+    <div *ngIf="mostrarModal" class="modal">
+      <div class="modal-content">
+        <h3>Confirmar eliminación</h3>
+        <p>¿Estás seguro de que deseas eliminar el paquete?</p>
+        <div class="modal-actions">
+          <button (click)="eliminarVehiculo()" class="p-button p-button-danger">Sí, eliminar</button>
+          <button (click)="cerrarModal()" class="p-button">Cancelar</button>
+        </div>
       </div>
     </div>
-  </div>
+  </main>
 </div>
+

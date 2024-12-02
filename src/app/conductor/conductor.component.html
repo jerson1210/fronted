@@ -1,82 +1,87 @@
 <div class="container">
-  <div class="header">
-    <h2 class="title">Conductor</h2>
+  <!-- Menú lateral -->
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="ruta_del_logo.png" alt="Logo">
+    </div>
+    <ul class="menu">
+      <li><a routerLink="/"><i class="icon-vehiculo"></i> Vehículo</a></li>
+      <li><a routerLink="/paquete"><i class="icon-paquete"></i> Paquete</a></li>
+      <li><a routerLink="/ruta"><i class="icon-ruta"></i> Ruta</a></li>
+      <li><a routerLink="/conductor"><i class="icon-conductor"></i> Conductor</a></li>
+      <li><a routerLink="/asignarRuta"><i class="icon-conductor"></i> AsingarRuta</a></li>
+    </ul>
+  </aside>
 
-  </div>
-  <div class="dashboard">
-    <div class="card">
-      <h3>
-        <a routerLink="/paquete">Paquetes</a>
-      </h3>
-    </div>
-    <div class="card">
-      <h3>
-        <a routerLink="/ruta">Rutas</a>
-      </h3>
-    </div>
-    <div class="card">
-      <h3>
-        <a routerLink="/asignarRuta">Asignar Ruta</a>
-      </h3>
-    </div>
-    <div class="card">
-      <h3>
-        <a routerLink="/">Vehículos</a>
-      </h3>
-    </div>
-    <div class="card">
-      <h3>
-        <a routerLink="/conductor">Conductores</a>
-      </h3>
-    </div>
-  </div>
-
-  <div class="actions">
-    <a [routerLink]="'/conductor-form'" class="p-button font-bold">Crear</a>
-
-  </div>
-
-  <!-- Tabla de vehículos -->
-  <div *ngIf="conductor.length === 0" class="no-conductor-message">
-    <p>No se encontraron vehículos registrados para este usuario.</p>
-  </div>
-  <table *ngIf="conductor.length > 0" class="styled-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>Telefono</th>
-        <th>Correo</th>
-        <th>Contraseña</th>
-        <th>Acciones</th>  <!-- Columna para las acciones de eliminar -->
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let conductor of conductor">
-        <td>{{ conductor.idConductor }}</td>
-        <td>{{ conductor.nombre }}</td>
-        <td>{{ conductor.apellido }} </td>
-        <td>{{ conductor.correo }}</td>
-        <td>{{ conductor.telefono }}</td>
-        <td>{{ conductor.contrasena  }}</td>
-        <td>
-          <button (click)="seleccionConductor(conductor.idConductor)" class="p-button p-button-danger">Eliminar</button>
-        </td>
-        <td>
-          <button pButton label=""(click)="goToUpdateFormConductor(conductor.idConductor)">Actualizar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div *ngIf="mostrarModal" class="modal">
-    <div class="modal-content">
-      <h3>Confirmar eliminación</h3>
-      <p>¿Estás seguro de que deseas eliminar el conductor?</p>
-      <div class="modal-actions">
-        <button (click)="eliminarConductor()" class="p-button p-button-danger">Sí, eliminar</button>
-        <button (click)="cerrarModal()" class="p-button">Cancelar</button>
+  <!-- Contenido principal -->
+  <main class="content">
+    <!-- Header con usuario -->
+    <header class="header">
+      <div class="user-info">
+        <ng-container *ngIf="usuarioId; else notLoggedIn">
+          <span>{{ usuarioNombre }}</span>
+          <button (click)="cerrarSesion()" class="logout-button">Cerrar sesión</button>
+        </ng-container>
+        <ng-template #notLoggedIn>
+          <a routerLink="/usuario" class="login-link">Iniciar sesión</a>
+        </ng-template>
       </div>
-    </div>
-  </div>
+    </header>
+
+    <!-- Acciones -->
+    <section class="actions">
+      <h2 class="title">Conductor</h2>
+      <div class="buttons">
+        <a routerLink="/vehiculos-form" class="btn btn-create">Crear</a>
+
+      </div>
+    </section>
+
+    <!-- Tabla -->
+    <section class="table-section">
+      <table *ngIf="conductor.length > 0" class="styled-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Telefono</th>
+            <th>Correo</th>
+            <th>Contraseña</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let conductor of conductor">
+            <td>{{ conductor.idConductor }}</td>
+            <td>{{ conductor.nombre }}</td>
+            <td>{{ conductor.apellido }}</td>
+            <td>{{ conductor.telefono }} </td>
+            <td>{{ conductor.correo }}</td>
+            <td>{{ conductor.contrasena }}</td>
+            <td>
+              <button (click)="seleccionConductor(conductor.idConductor)" class="p-button p-button-danger">
+                Eliminar
+              </button>
+            </td>
+            <td>
+              <button  (click)="goToUpdateFormConductor (conductor.idConductor)" class="p-button p-button-danger">Actualizar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="conductor.length === 0" class="no-data">No hay conductores registrados.</div>
+      <div *ngIf="mostrarModal" class="modal">
+        <div class="modal-content">
+          <h3>Confirmar eliminación</h3>
+          <p>¿Estás seguro de que deseas eliminar la ruta?</p>
+          <div class="modal-actions">
+            <button (click)="eliminarConductor()" class="p-button p-button-danger">Sí, eliminar</button>
+            <button (click)="cerrarModal()" class="p-button">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>

@@ -88,12 +88,12 @@ export class ConductorFormComponent {
     // Llamar al servicio para crear el vehículo
     this.conductorService.createConductor(conductorData).subscribe({
       next: () => {
-        this.messageService.add({ severity: "success", summary: "Guardado", detail: "Vehículo guardado" });
+        this.messageService.add({ severity: "success", summary: "Guardado", detail: "conductor guardado" });
         this.router.navigateByUrl("/conductor"); // Ajusta la ruta a donde necesites
       },
       error: (err) => {
-        console.error('Error al guardar el vehículo', err);
-        this.messageService.add({ severity: "error", summary: "Error", detail: "Hubo un error al guardar el vehículo" });
+        console.error('Error al guardar el conductor', err);
+        this.messageService.add({ severity: "error", summary: "Error", detail: "Hubo un error al guardar el conductor" });
       }
     });
   }

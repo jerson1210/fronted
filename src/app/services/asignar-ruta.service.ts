@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { asignarRutaDto } from '../models/asignarRutaDto';
+import { asignarRuta } from '../models/asignarRuta';
+import { asignarRutaTotal } from '../models/asignarRutaTotal';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +13,17 @@ export class AsignarRutaService {
 
   constructor(private http: HttpClient) {}
 
+  listarRutaAsignada():Observable<asignarRutaTotal[]>{
+    return this.http.get<asignarRutaTotal[]>(`${this.apiUrl}/listar`)
+  }
+
+
   listarAsignarRutaConductor(id: number): Observable<asignarRutaDto[]> {
     return this.http.get<asignarRutaDto[]>(`${this.apiUrl}/listar/${id}`);
   }
 
-  eliminarRuta(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/eliminar/${id}`);
+  crearAsignacion(asignarRuta: asignarRuta): Observable<asignarRuta> {
+    return this.http.post<asignarRuta>(`${this.apiUrl}/crear`, asignarRuta);
   }
 
   eliminarAsignarRuta(idAsignarRuta: number): Observable<void> {
