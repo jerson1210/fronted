@@ -125,7 +125,7 @@ export class PaqueteComponent {
         this.router.navigate(['/ruta']); // Redirigir a la página de la ruta creada
   
         // Ahora eliminar los paquetes seleccionados
-        this.eliminarPaquetesSeleccionados();
+      
       },
       error: (error) => {
         console.error('Error al crear la ruta:', error);
@@ -134,30 +134,7 @@ export class PaqueteComponent {
     });
   }
   
-  eliminarPaquetesSeleccionados(): void {
-    // Verificar si hay paquetes seleccionados
-    if (this.paquetesSeleccionados.length > 0) {
-      for (const id of this.paquetesSeleccionados) {
-        // Llamada al servicio para eliminar cada paquete por su ID
-        this.paqueteService.deletePaquete(id).subscribe({
-          next: () => {
-            console.log(`Paquete con ID ${id} eliminado exitosamente`);
-            // Eliminar el paquete de la lista en el frontend
-            this.paquete = this.paquete.filter((paquete) => paquete.idPaqueteEnvio !== id);
-          },
-          error: (error) => {
-            console.error(`Error al eliminar el paquete con ID ${id}:`, error);
-            alert(`No se pudo eliminar el paquete con ID ${id}`);
-          },
-        });
-      }
-  
-      // Limpiar la selección de paquetes después de la eliminación
-      this.paquetesSeleccionados = [];
-    } else {
-      alert('No se han seleccionado paquetes para eliminar');
-    }
-  }
+
   
 
   // Método adicional para verificar si un paquete ya está seleccionado

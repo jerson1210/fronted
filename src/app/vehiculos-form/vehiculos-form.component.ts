@@ -96,7 +96,7 @@ export class VehiculosFormComponent {
     this.vehiculoService.createVehiculo(vehiculoData).subscribe({
       next: () => {
         this.messageService.add({ severity: "success", summary: "Guardado", detail: "Vehículo guardado" });
-        this.router.navigateByUrl("/vehiculos"); // Ajusta la ruta a donde necesites
+        this.router.navigateByUrl("/vehiculo"); // Ajusta la ruta a donde necesites
       },
       error: (err) => {
         console.error('Error al guardar el vehículo', err);
@@ -119,7 +119,7 @@ export class VehiculosFormComponent {
     this.vehiculoService.actualizarVehiculo(vehiculoData).subscribe({
       next: () => {
         this.messageService.add({ severity: "success", summary: "Guardado", detail: "Vehículo actualizado" });
-        this.router.navigateByUrl("/vehiculos");
+        this.router.navigateByUrl("/vehiculo");
       },
       error: (err) => {
         console.error('Error al actualizar el vehículo', err);

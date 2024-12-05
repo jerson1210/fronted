@@ -52,7 +52,6 @@
           <th>Nombre</th>
           <th>Numero</th>
           <th>Direccion</th>
-          <th>PesoPaquete</th>
           <th>Fecha</th>
           <th>Acciones</th>
         </tr>
@@ -71,17 +70,12 @@
           <td>{{ paquete.nombre }}</td>
           <td>{{ paquete.numero }}</td>
           <td>{{ paquete.direccion }}</td>
-          <td>{{ paquete.pesoPaquete }}</td>
           <td>{{ paquete.fecha }}</td>
           <td>
             <button (click)="seleccionarPaqueteParaEliminar(paquete.idPaqueteEnvio)" class="p-button p-button-danger">
               Eliminar
             </button>
-            <td>
-              <button (click)="goToUpdateForm(paquete.idPaqueteEnvio)" class="p-button p-button-danger">
-                Actualizar
-              </button>
-            </td>
+
           
         </tr>
       </tbody>seleccionarPaquete
